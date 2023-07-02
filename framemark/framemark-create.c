@@ -2300,8 +2300,8 @@ synthesize_negatives_and_embed_positives(ESL_GETOPTS *go, struct cfg_s *cfg, ESL
           posseqs[j]->desc, /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
           bmksq->name,      /* output sequence name   (e.g. framemark10)   */
           posseqs[j]->name, /* positive sequence name (from input MSA) */
-          (posseqs_o[j] == 0) ? (bmk_p - posseqs[j]->n + 1) : bmk_p,   /* start point in bmksq */
-          (posseqs_o[j] == 0) ? bmk_p : (bmk_p - posseqs[j]->n + 1));  /* end   point in bmksq */
+          (posseqs_o[j] == 0) ? (bmk_p - posseqs[j]->n) : bmk_p - 1,   /* start point in bmksq */
+          (posseqs_o[j] == 0) ? bmk_p - 1 : (bmk_p - posseqs[j]->n));  /* end   point in bmksq */
     }
 
     /* done embedding, finish off outseq with the chunk that occurs after the final embedded seq */
