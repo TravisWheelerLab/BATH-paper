@@ -2,7 +2,7 @@
  * Modified from HMMER's create-profmark.c. 
  * 
  * Usage:
- *   ./framemark-create <basename> <DNA msa file> <protein msa file> <blast path> <easle path> <background hmm file> <frameshift rate>
+ *   ./framemark-create <basename> <DNA msa file> <blast path> <easle path> <background hmm file> <frameshift rate>
  * For example:
  *   ./framemark-create framemark01 /misc/data0/databases/DNA.msa /misc/data0/databases/protein.msa /ncbi-blast-2.13.0+/bin/ /hmmer/easel/miniapps/ 0.01
  *
@@ -20,18 +20,18 @@
  * - negative sequences with >= 0 positives embedded 
  *   within them
  *
- * Six output files are generated:
- *   <basename>.tbl  - table summarizing the benchmark
- *   <basename>.msa  - MSA queries, stockholm format
- *   <basename>.fa   - benchmark sequences, fasta format
- *   <basename>.pos  - table summarizing positive test set;
- *                     their locations in the benchmark seqs
- *   <basename>.pfa  - positive sequences, fasta format
- *   <basename>.ppos - table summarizing positive test seqs;
- *                     their locations in the .pfa file
- *   <basename>.loc  - table listing the exact location of 
- *                     every indel implated in a positive 
- *                     sequence
+ * Seven output files are generated:
+ *   <basename>.tbl      - table summarizing the benchmark
+ *   <basename>.DNA.msa  - MSA of DNA queries, stockholm format
+ *   <basename>.fa       - benchmark sequences, fasta format
+ *   <basename>.pos      - table summarizing positive test set;
+ *                         their locations in the benchmark seqs
+ *   <basename>.pfa      - positive sequences, fasta format
+ *   <basename>.ppos     - table summarizing positive test seqs;
+ *                         their locations in the .pfa file
+ *   <basename>.loc      - table listing the exact location of 
+ *                         every indel implated in a positive 
+ *                         sequence
  */
 
 #include <stdlib.h>
@@ -58,9 +58,7 @@
 #include "esl_msafile2.h"
 
 static char banner[] = "construct a framemark benchmark profile training/test set";
-static char usage1[]  = "[options] <basename> <msafile> <blast path> <hmmfile>";
-static char usage2[]  = "[options] -S    <basename> <msafile> <blast path> <seqdb>";
-static char usage3[]  = "[options] --iid <basename> <msafile> <blast path>\n";
+static char usage1[]  = "[options] <basename> <DNA msafile> <blast path> <bg hmmfile> <fs rate>";
 
 #define SHUF_OPTS "--mono,--di,--markov0,--markov1"   /* toggle group, seq shuffling options          */
 
@@ -68,14 +66,15 @@ static ESL_OPTIONS options[] = {
   /* name         type           default    env   range       togs  reqs  incomp           help                                                                docgroup */
   { "-h",         eslARG_NONE,   FALSE,     NULL, NULL,       NULL, NULL, NULL,            "help; show brief info on version and usage",                       1 },
   { "-D",         eslARG_INFILE, FALSE,     NULL, NULL,       NULL, NULL, NULL,            "insert decoy translated protein seq in neg seq <msadb>",           1 },
-  { "-S",         eslARG_NONE,   FALSE,     NULL, NULL,       NULL, NULL, NULL,            "do not generate with an HMM, shuffle seqs from <seqdb>",           1 },
+  { "-S",         eslARG_NONE,   FALSE,     NULL, NULL,       NULL, NULL, NULL,            "do not generate with an HMM, shuffle seqs from <seqdb>",           99 },
   { "-1",         eslARG_REAL,   "0.60",    NULL, "0<x<=1.0", NULL, NULL, NULL,            "require all test seqs to have < x id to training",                 1 },
   { "-2",         eslARG_REAL,   "0.70",    NULL, "0<x<=1.0", NULL, NULL, NULL,            "require all test seqs to have < x id to each other",               1 },
   { "-3",         eslARG_REAL,   "0.0001",  NULL, "0<x<=1.0", NULL, NULL, NULL,            "require all test seqs to have >= x id to training",                1 },
   { "-F",         eslARG_REAL,   "0.70",    NULL, "0<x<=1.0", NULL, NULL, NULL,            "filter out seqs <x*average length",                                1 },
   { "-N",         eslARG_INT,    "10",      NULL, NULL,       NULL, NULL, NULL,            "number of benchmark seqs",                                         1 },
   { "-L",         eslARG_INT,    "1000000", NULL, "n>0",      NULL, NULL, NULL,            "full length of benchmark seqs prior to test seq embedding",        1 },
-  { "-C",         eslARG_INT,    "1000",    NULL, "n>0",      NULL, NULL, "--iid",         "length of <seqdb> seqs to extract/shuffle when making test seqs",  1 },
+  
+  { "-C",         eslARG_INT,    "1000",    NULL, "n>0",      NULL, NULL, NULL,         "length of <seqdb> seqs to extract/shuffle when making test seqs",  1 },
   { "-X",         eslARG_REAL,   "0.05",    NULL, "0<x<=1.0", NULL, NULL, NULL,            "maximum fraction of total test seq covered by positives",          1 },
   { "-R",         eslARG_INT,    "5",       NULL, "n>0",      NULL, NULL, NULL,            "minimum number of training seqs per family",                       1 },
   { "-E",         eslARG_INT,    "1",       NULL, "n>0",      NULL, NULL, NULL,            "minimum number of test     seqs per family",                       1 },
@@ -84,11 +83,11 @@ static ESL_OPTIONS options[] = {
   { "--maxfams",  eslARG_INT,    FALSE,     NULL, NULL,       NULL, NULL, NULL,            "maximum # of families to use for test and training stes",          1 },
 
   /* Options controlling negative segment randomization method  */
-  { "--iid",     eslARG_NONE,    FALSE,     NULL, NULL,       NULL, NULL, "-S",            "generate random iid sequence for negatives",                         2 },
-  { "--mono",    eslARG_NONE,    FALSE,     NULL, NULL,       NULL, "-S", SHUF_OPTS,       "with -S, shuffle preserving monoresidue composition",                2 },
-  { "--di",      eslARG_NONE,    FALSE,     NULL, NULL,       NULL, "-S", SHUF_OPTS,       "with -S, shuffle preserving mono- and di-residue composition",       2 },
-  { "--markov0", eslARG_NONE,    FALSE,     NULL, NULL,       NULL, "-S", SHUF_OPTS,       "with -S, generate with 0th order Markov properties per input",       2 },
-  { "--markov1", eslARG_NONE,    FALSE,     NULL, NULL,       NULL, "-S", SHUF_OPTS,       "with -S, generate with 1st order Markov properties per input",       2 },
+  { "--iid",     eslARG_NONE,    FALSE,     NULL, NULL,       NULL, NULL, "-S",            "generate random iid sequence for negatives",                         99 },
+  { "--mono",    eslARG_NONE,    FALSE,     NULL, NULL,       NULL, "-S", SHUF_OPTS,       "with -S, shuffle preserving monoresidue composition",                99 },
+  { "--di",      eslARG_NONE,    FALSE,     NULL, NULL,       NULL, "-S", SHUF_OPTS,       "with -S, shuffle preserving mono- and di-residue composition",       99 },
+  { "--markov0", eslARG_NONE,    FALSE,     NULL, NULL,       NULL, "-S", SHUF_OPTS,       "with -S, generate with 0th order Markov properties per input",       99 },
+  { "--markov1", eslARG_NONE,    FALSE,     NULL, NULL,       NULL, "-S", SHUF_OPTS,       "with -S, generate with 1st order Markov properties per input",       99 },
 
   /* Options forcing which alphabet we're working in (normally autodetected) */
   { "--amino",  eslARG_NONE,     FALSE,     NULL, NULL,       NULL, NULL, "--dna,--rna",   "<msafile> contains protein alignments",                              3 },
@@ -105,7 +104,7 @@ static ESL_OPTIONS options[] = {
   { "--xtest",  eslARG_NONE,     FALSE,     NULL, NULL,       NULL, NULL, NULL,            "w/--sub or --sample, maximize |test|, not |train|+|test|",           4 },
   { "--nfile",  eslARG_OUTFILE,  FALSE,     NULL, NULL,       NULL, NULL, NULL,            "save benchmark database *without* positives to <f>",                 4 },
   { "--tfile",  eslARG_OUTFILE,  FALSE,     NULL, NULL,       NULL, NULL, NULL,            "save orig/train/test alignments with renamed seqs to <f>",           4 },
-
+  { "--over",   eslARG_NONE,     FALSE,     NULL, NULL,       NULL, NULL, NULL,            "embed only middle 50% of test seqs - overextension benchmark",       4 },
   { 0,0,0,0,0,0,0,0,0,0 },
 };
 
@@ -117,6 +116,7 @@ struct cfg_s {
   double          idthresh1;     /* fractional identity threshold for train/test split (max)*/
   double          idthresh2;     /* fractional identity threshold for selecting test seqs   */
   double          idthresh3;     /* fractional identity threshold for train/test split (min)*/
+  double          frameshift;   /*rate at which to place indels into positive sequences*/
   int             min_ntrain;    /* minimum number of sequences in the training set */
   int             min_ntest;     /* minimum number of sequences in the test set */
   int             max_ntrain;    /* maximum number of test domains per input alignment; 0=unlimited */
@@ -124,9 +124,7 @@ struct cfg_s {
   int             max_families;  /* maximum nuber of test & train families to read in from premade sets */
 
   FILE           *out_dnamsafp;  /* output: DNA training MSAs  */
-  FILE           *out_aamsafp;   /* output: DA training MSAs  */  
   FILE           *out_bmkfp;     /* output: benchmark sequences */
-  FILE           *out_posfp;     /* output: positive sequences */
 
   FILE           *orfseqfp;      /* output: shuffled decoy ORF sequences */
   FILE           *orfpossumfp;   /* output: summary table of the decoy ORF test set in the benchmark seqs */
@@ -134,6 +132,7 @@ struct cfg_s {
   
   FILE           *possummfp;     /* output: summary table of the positive test set in the benchmark seqs */
   FILE           *ppossummfp;    /* output: summary table of the positive-only test set */
+  FILE           *fsposfp;       /* output: summary table of embedded frameshift locations */
   FILE           *negsummfp;     /* output: summary table of the negative test set */
   FILE           *tblfp;         /* output: summary table of the training set alignments */
   FILE           *nseqfp;        /* output: (optional) negative sequences only (without embedded positives) */
@@ -186,8 +185,6 @@ cmdline_failure(char *argv0, char *format, ...)
   vfprintf(stderr, format, argp);
   va_end(argp);
   esl_usage(stdout, argv0, usage1);
-  esl_usage(stdout, argv0, usage2);
-  esl_usage(stdout, argv0, usage3);
   printf("\nTo see more help on available options, do %s -h\n\n", argv0);
   exit(1);
 }
@@ -197,7 +194,6 @@ cmdline_help(char *argv0, ESL_GETOPTS *go)
 {
   esl_banner(stdout, argv0, banner);
   esl_usage (stdout, argv0, usage1);
-  esl_usage (stdout, argv0, usage2);
   puts("\n where general options are:");
   esl_opt_DisplayHelp(stdout, go, 1, 2, 80);
   puts("\n options controlling segment randomization method:");
@@ -228,6 +224,7 @@ main(int argc, char **argv)
   ESL_MSA      *msa                       = NULL;      /* MSA after frags are removed                                       */
   ESL_MSA      *trainmsa                  = NULL;      /* training set, aligned                                             */
   ESL_MSA      *testmsa                   = NULL;      /* test set, aligned                          */
+  ESL_MSA      *testmsa_AA                   = NULL;    /* test set, aligned, in amino acids                          */
   ESL_MSA      *tmpmsa                    = NULL;      /* tmp aligned training/testing set, used if --tfile                 */
   int          *i_am_train                = NULL;      /* [0..msa->nseq-1]: 1 if train seq, 0 if not                        */
   int          *i_am_test                 = NULL;      /* [0..msa->nseq-1]: 1 if test  seq, 0 if not                        */
@@ -238,12 +235,23 @@ main(int argc, char **argv)
   int           nali;                                  /* number of alignments read                                         */
   int           npos;                                  /* number of positive test sequences stored                          */
   int           npos_this_msa;                         /* number of positive test sequences stored for current msa          */
+  int           fs = FALSE;
+  int           last_fs = 2;
+  int           extend;
+
   ESL_SQ      **posseqs                   = NULL;      /* all the test seqs, to be embedded                                 */
+  ESL_SQ      **posseqs_fs                = NULL;      /* all the test seqs, to be embedded, with added frameshifts                                 */
+  ESL_SQ      **posseqs_over                = NULL;      /* all the test seqs, to be embedded, with added frameshifts                                 */
+  ESL_SQ       *tmp_seq1                   = NULL;      /* temporarily holds test seq for overextention benchmarking                                */
+   ESL_SQ       *tmp_seq2                   = NULL;      /* temporarily holds test seq for overextention benchmarking                                */
+
   int64_t       poslen_total;                          /* total length of all positive seqs                                 */
+  int64_t       poslen_total_fs;
   double        avgid;
   void         *ptr;
   int           i, j; 
   int           traini, testi;
+  int           trim;
   int           match;
   int           MAX_TT_MSA_NAMES          = 20000; 
   int           familiy_set[MAX_TT_MSA_NAMES];
@@ -267,6 +275,9 @@ main(int argc, char **argv)
 
   int           num_msas_to_process       = 0;
   int           current_msa_number        = 0;
+  float choose[4];
+  int64_t np;
+  ESL_DSQ x;
 
   /* Parse command line */
   go = esl_getopts_Create(options);
@@ -275,8 +286,8 @@ main(int argc, char **argv)
   if (esl_opt_GetBoolean(go, "-h"))                    cmdline_help(argv[0], go);
 
   if ((  esl_opt_GetBoolean(go, "--iid") && esl_opt_ArgNumber(go) != 4) || 
-      (! esl_opt_GetBoolean(go, "--iid") && esl_opt_ArgNumber(go) != 5)) { 
-    cmdline_failure(argv[0], "Incorrect number of command line arguments\n");
+      (! esl_opt_GetBoolean(go, "--iid") && esl_opt_ArgNumber(go) != 6)) { 
+      cmdline_failure(argv[0], "Incorrect number of command line arguments\n");
   }
   basename = esl_opt_GetArg(go, 1); 
   alifile  = esl_opt_GetArg(go, 2);
@@ -320,6 +331,7 @@ main(int argc, char **argv)
   cfg.max_ntest  = (esl_opt_IsOn(go, "--maxtest")  ? esl_opt_GetInteger(go, "--maxtest")  : 0);
   cfg.max_ntrain = (esl_opt_IsOn(go, "--maxtrain") ? esl_opt_GetInteger(go, "--maxtrain") : 0);
   cfg.max_families = (esl_opt_IsOn(go, "--maxfams") ? esl_opt_GetInteger(go, "--maxfams") : (cfg.nneg * cfg.negL / 1000000));
+  cfg.frameshift   = atof( esl_opt_GetArg(go, 6) );
 
   if (cfg.max_ntest>0  && cfg.max_ntest  < cfg.min_ntest)   esl_fatal("Conflict between -E and --maxtest");
   if (cfg.max_ntrain>0 && cfg.max_ntrain < cfg.min_ntrain)  esl_fatal("Conflict between -R and --maxtrain");
@@ -328,16 +340,14 @@ main(int argc, char **argv)
 
   if (snprintf(outfile, 256, "%s.DNA.msa", basename) >= 256)  esl_fatal("Failed to construct output DNA MSA file name");
   if ((cfg.out_dnamsafp = fopen(outfile, "w"))      == NULL)  esl_fatal("Failed to open DNA MSA output file %s\n", outfile);
-  if (snprintf(outfile, 256, "%s.AA.msa", basename) >= 256)   esl_fatal("Failed to construct output Amino Acid MSA file name");
-  if ((cfg.out_aamsafp = fopen(outfile, "w"))      == NULL)   esl_fatal("Failed to open Amino Acid MSA output file %s\n", outfile);
-  if (snprintf(outfile, 256, "%s.fa",  basename) >= 256)      esl_fatal("Failed to construct output FASTA file name");
-  if ((cfg.out_bmkfp = fopen(outfile, "w"))      == NULL)     esl_fatal("Failed to open FASTA output file %s\n", outfile);
-  if (snprintf(outfile, 256, "%s.pfa",  basename) >= 256)     esl_fatal("Failed to construct output positive FASTA file name");
-  if ((cfg.out_posfp = fopen(outfile, "w"))      == NULL)     esl_fatal("Failed to open positive FASTA output file %s\n", outfile);
+  if (snprintf(outfile, 256, "%s.fa",  basename) >= 256)   esl_fatal("Failed to construct output FASTA file name");
+  if ((cfg.out_bmkfp = fopen(outfile, "w"))      == NULL)  esl_fatal("Failed to open FASTA output file %s\n", outfile);
   if (snprintf(outfile, 256, "%s.pos", basename) >= 256)      esl_fatal("Failed to construct pos test set summary file name");
   if ((cfg.possummfp = fopen(outfile, "w"))      == NULL)     esl_fatal("Failed to open pos test set summary file %s\n", outfile);
   if (snprintf(outfile, 256, "%s.ppos", basename) >= 256)     esl_fatal("Failed to construct pos-only test set summary file name");
   if ((cfg.ppossummfp = fopen(outfile, "w"))      == NULL)    esl_fatal("Failed to open pos-only test set summary file %s\n", outfile);
+  if (snprintf(outfile, 256, "%s.loc", basename) >= 256)      esl_fatal("Failed to construct frameshift loction summary file name");
+  if ((cfg.fsposfp = fopen(outfile, "w"))      == NULL)       esl_fatal("Failed to open frameshift location summary file %s\n", outfile);
   if (snprintf(outfile, 256, "%s.tbl", basename) >= 256)      esl_fatal("Failed to construct benchmark table file name");
   if ((cfg.tblfp     = fopen(outfile, "w"))      == NULL)     esl_fatal("Failed to open benchmark table file %s\n", outfile);
   if (esl_opt_GetBoolean(go, "-S")) { 
@@ -470,7 +480,9 @@ main(int argc, char **argv)
   if(hmmfile != NULL) read_hmmfile(hmmfile, &(cfg.hmm));
   if(dbfile != NULL)  process_dbfile(&cfg, dbfile, dbfmt);
 
-    
+  tmp_seq1 = esl_sq_CreateDigital(cfg.abc);  
+  tmp_seq2 = esl_sq_CreateDigital(cfg.abc);
+
   if(esl_opt_IsOn(go, "--pre")) {
     
     /* check that msa file is properly formated tfile
@@ -555,7 +567,7 @@ main(int argc, char **argv)
           for(i=0; i < ntrainseq; i++) {
             i_am_train[i] = TRUE;
           }
-
+	
           /* If there are too may seqs in the premade train set, randomly
            * find a TRUE entry in i_am_train, and set it to FALSE        */
           while (cfg.max_ntrain > 0 && ntrainseq > cfg.max_ntrain) {
@@ -594,29 +606,168 @@ main(int argc, char **argv)
 
          /* Save the positive test sequences, we'll embed these
           * in the long test sequences later */
-          if(npos > 0) { ESL_RALLOC(posseqs, ptr, sizeof(ESL_SQ *) * (npos + ntestseq)); }
-          else         { ESL_ALLOC (posseqs,      sizeof(ESL_SQ *) * ntestseq); }
-           
+          if(npos > 0) { ESL_RALLOC(posseqs, ptr, sizeof(ESL_SQ *) * (npos + ntestseq)); 
+                         ESL_RALLOC(posseqs_fs, ptr, sizeof(ESL_SQ *) * (npos + ntestseq)); 
+                         ESL_RALLOC(posseqs_over, ptr, sizeof(ESL_SQ *) * (npos + ntestseq)); }
+          else         { ESL_ALLOC (posseqs,      sizeof(ESL_SQ *) * ntestseq); 
+                         ESL_ALLOC (posseqs_fs,      sizeof(ESL_SQ *) * ntestseq); 
+                         ESL_ALLOC (posseqs_over,      sizeof(ESL_SQ *) * ntestseq);  }
+
+          npos_this_msa = 0;
           for(i = 0; i < testmsa->nseq; i++) { 
+            
             if(i_am_test[i]) { 
               esl_sq_FetchFromMSA(testmsa, i, &(posseqs[npos]));
+	      esl_sq_FormatDesc(posseqs[npos], "%s/%d", family_name, npos_this_msa+1);
+
+              if(esl_opt_IsOn(go, "--over")) {
+	   
+                posseqs_over[npos] = esl_sq_CreateDigital(cfg.abc);
+                esl_sq_SetName(posseqs_over[npos], posseqs[npos]->name);
+                esl_sq_SetAccession(posseqs_over[npos], posseqs[npos]->acc);
+                esl_sq_FormatDesc(posseqs_over[npos], posseqs[npos]->desc); 
+               
+		trim = posseqs[npos]->n / 4;
+              
+		for(int c = trim; c <= (posseqs[npos]->n-trim); c++) {
+		  x = posseqs[npos]->dsq[c];
+                  if ((status = esl_sq_XAddResidue(posseqs_over[npos], x)) != eslOK) goto ERROR; 
+		    
+		} 
+             
+               esl_sq_Copy(posseqs_over[npos], posseqs[npos]);
+            
+              }
+
               poslen_total += posseqs[npos]->n;
+	
              /* Sequence description is set as a concatenation of the
               * family name and the sequence index in this family,
               * separated by a '/', which never appears in an Rfam
-              * name. For example: "tRNA/3" for the third tRNA.
-              */
-              esl_sq_FormatDesc(posseqs[npos], "%s/%d", family_name, npos_this_msa+1);
-          
+              * name. For example: "tRNA/3" for the third tRNA.              */
+              
+            if(cfg.frameshift > 0) {
+              posseqs_fs[npos] = esl_sq_CreateDigital(cfg.abc);
+              esl_sq_SetName(posseqs_fs[npos], posseqs[npos]->name);
+              esl_sq_SetAccession(posseqs_fs[npos], posseqs[npos]->acc);
+              esl_sq_FormatDesc(posseqs_fs[npos], posseqs[npos]->desc);
+
+              for(int c = 0; c <= posseqs[npos]->n; c++) {
+                /*indel start probability */
+                choose[0] = 1-cfg.frameshift;
+                choose[1] = cfg.frameshift;
+                switch (esl_rnd_FChoose(cfg.r, choose, 2)) {
+                /* no indel */
+                case 0: esl_sq_Grow(posseqs_fs[npos], &np);
+                        x = posseqs[npos]->dsq[c];
+                        if ((status = esl_sq_XAddResidue(posseqs_fs[npos], x)) != eslOK) goto ERROR;
+                        fs = FALSE;
+                        break;
+
+                /* indel start */
+                case 1: /* select insert or delete */
+                        switch (esl_rnd_Roll(cfg.r, 2)) {
+
+                        /* insert */
+                        case 0: esl_sq_Grow(posseqs_fs[npos], &np);
+
+                                /* select random nucleotide to insert */
+                                x = esl_rnd_Roll(cfg.r, 4);
+                                if ((status = esl_sq_XAddResidue(posseqs_fs[npos], x)) != eslOK) goto ERROR;
+                                /* record location of indel */
+                                fprintf(cfg.fsposfp, "%-35s %c %8" PRId64 "\n",
+                                posseqs_fs[npos]->desc,  /* sequence*/
+                                'I', /* I or D */
+                                posseqs_fs[npos]->n); /* position */
+
+                                /* insert extention probability */
+                                extend = 1;
+                                while(extend) {
+                                  choose[0] = 0.5;
+                                  choose[1] = 0.5;
+                                  switch (esl_rnd_FChoose(cfg.r, choose, 2)) {
+
+                                  /* conclude insert */
+                                  case 0: extend = 0; break;
+
+                                  /* extend insert*/
+                                  case 1: esl_sq_Grow(posseqs_fs[npos], &np);
+                                          x = esl_rnd_Roll(cfg.r, 4);
+                                          if ((status = esl_sq_XAddResidue(posseqs_fs[npos], x)) != eslOK) goto ERROR;
+                                          /* record location of indel */
+                                          fprintf(cfg.fsposfp, "%-35s %c %8" PRId64 "\n",
+                                          posseqs_fs[npos]->desc,  /* sequence*/
+                                          'I', /* I or D */
+                                          posseqs_fs[npos]->n); /* position */
+                                          break;
+                                  }
+                                }
+
+                                /* add next sequence residue */
+                                x = posseqs[npos]->dsq[c];
+                                if ((status = esl_sq_XAddResidue(posseqs_fs[npos], x)) != eslOK) goto ERROR;
+                                break;
+
+                        /* delete */
+                        case 1: /* record location of indel */
+                                fprintf(cfg.fsposfp, "%-35s %c %8" PRId64 "\n",
+                                posseqs_fs[npos]->desc,  /* sequence*/
+                                'D', /* I or D */
+                                posseqs_fs[npos]->n); /* position */
+
+                                /* deletion extention probability */
+                                if(c != posseqs[npos]->n) extend = 1;
+                                else extend = 0;
+                                while(extend) {
+                                  choose[0] = 0.5;
+                                  choose[1] = 0.5;
+                                  switch (esl_rnd_FChoose(cfg.r, choose, 2)) {
+
+                                    /* conclude detetion */
+                                    case 0: extend = 0; break;
+
+                                    /* extend deltetion */
+                                    case 1:
+
+                                    /* record location of indel */
+                                    fprintf(cfg.fsposfp, "%-35s %c %8" PRId64 "\n",
+                                          posseqs_fs[npos]->desc,  /* sequence*/
+                                          'D', /* I or D */
+                                          posseqs_fs[npos]->n); /* position */
+
+                                    /* move one position in original sequence */
+                                    c++;
+                                    break;
+                                  }
+                                }
+                                break;
+                        }
+                }
+                
+                  if ((status = esl_sq_XAddResidue(posseqs_fs[npos], eslDSQ_SENTINEL)) != eslOK) goto ERROR;
+              }
+
+              /* print frameshift sequence */
+              poslen_total_fs += posseqs_fs[npos]->n;
+
+              /* record frameshift sequence data */
+              fprintf(cfg.ppossummfp, "%-35s %-35s %-35s %8d %8" PRId64 "\n",
+              posseqs_fs[npos]->desc,  /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
+              posseqs_fs[npos]->name,  /* positive sequence name (from input MSA) */
+              posseqs_fs[npos]->name,  /* again, positive sequence name (from input MSA) */
+              1, posseqs_fs[npos]->n); /* start, stop */
+
+           } else { 
+         
              /* Write the sequence to the positives-only output file, and its info the positives-only table */
-              esl_sqio_Write(cfg.out_posfp, posseqs[npos], eslSQFILE_FASTA, FALSE);
               fprintf(cfg.ppossummfp, "%-35s %-35s %-35s %8d %8" PRId64 "\n",
                 posseqs[npos]->desc,  /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
                 posseqs[npos]->name,  /* positive sequence name (from input MSA) */
                 posseqs[npos]->name,  /* again, positive sequence name (from input MSA) */
                 1, posseqs[npos]->n); /* start, stop */
-              npos++;
-              npos_this_msa++;
+                npos++;
+                npos_this_msa++;
+              }
             }
           }
    
@@ -636,7 +787,6 @@ main(int argc, char **argv)
             }
             for(i = 0, testi = 0; i < testmsa->nseq; i++) {
               if(i_am_test[i]) {
-                //esl_msa_FormatSeqDescription(msa, i, msa->sqname[i]);
                 esl_msa_FormatSeqName(testmsa, i, "%s/%d", family_name, testi+1);
                 testi++;
               }
@@ -781,20 +931,151 @@ main(int argc, char **argv)
         for(i = 0; i < msa->nseq; i++) { 
           if(i_am_test[i]) { 
             esl_sq_FetchFromMSA(msa, i, &(posseqs[npos]));
+
+            esl_sq_FormatDesc(posseqs[npos], "%s/%d", msa->name, npos_this_msa+1);
+
+              if(esl_opt_IsOn(go, "--over")) {
+	   
+                posseqs_over[npos] = esl_sq_CreateDigital(cfg.abc);
+                esl_sq_SetName(posseqs_over[npos], posseqs[npos]->name);
+                esl_sq_SetAccession(posseqs_over[npos], posseqs[npos]->acc);
+                esl_sq_FormatDesc(posseqs_over[npos], posseqs[npos]->desc); 
+               
+		trim = posseqs[npos]->n / 4;
+              
+		for(int c = trim; c <= (posseqs[npos]->n-trim); c++) {
+		  x = posseqs[npos]->dsq[c];
+                  if ((status = esl_sq_XAddResidue(posseqs_over[npos], x)) != eslOK) goto ERROR; 
+		    
+		} 
+             
+               esl_sq_Copy(posseqs_over[npos], posseqs[npos]);
+            
+              }
+
+
             poslen_total += posseqs[npos]->n;
             /* Sequence description is set as a concatenation of the
              * family name and the sequence index in this family,
              * separated by a '/', which never appears in an Rfam
              * name. For example: "tRNA/3" for the third tRNA.
              */
-            esl_sq_FormatDesc(posseqs[npos], "%s/%d", msa->name, npos_this_msa+1);
-            /* Write the sequence to the positives-only output file, and its info the positives-only table */
-            esl_sqio_Write(cfg.out_posfp, posseqs[npos], eslSQFILE_FASTA, FALSE);
-            fprintf(cfg.ppossummfp, "%-35s %-35s %-35s %8d %8" PRId64 "\n",
-              posseqs[npos]->desc,  /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
-              posseqs[npos]->name,  /* positive sequence name (from input MSA) */
-              posseqs[npos]->name,  /* again, positive sequence name (from input MSA) */
-              1, posseqs[npos]->n); /* start, stop */
+            
+            if(cfg.frameshift > 0) {
+              for(int c = 0; c <= posseqs[npos]->n; c++) {
+                /*indel start probability */
+                choose[0] = 1-cfg.frameshift;
+                choose[1] = cfg.frameshift;
+
+                switch (esl_rnd_FChoose(cfg.r, choose, 2)) {
+                /* no indel */
+                case 0: esl_sq_Grow(posseqs_fs[npos], &np);
+                        x = posseqs[npos]->dsq[c];
+                        if ((status = esl_sq_XAddResidue(posseqs_fs[npos], x)) != eslOK) goto ERROR;
+                        fs = FALSE;
+                        break;
+
+                /* indel start */
+                case 1: /* select insert or delete */
+                        switch (esl_rnd_Roll(cfg.r, 2)) {
+
+                        /* insert */
+                        case 0: esl_sq_Grow(posseqs_fs[npos], &np);
+
+                                /* select random nucleotide to insert */
+                                x = esl_rnd_Roll(cfg.r, 4);
+                                if ((status = esl_sq_XAddResidue(posseqs_fs[npos], x)) != eslOK) goto ERROR;
+                                /* record location of indel */
+                                fprintf(cfg.fsposfp, "%-35s %c %8" PRId64 "\n",
+                                posseqs_fs[npos]->desc,  /* sequence*/
+                                'I', /* I or D */
+                                posseqs_fs[npos]->n); /* position */
+
+                                /* insert extention probability */
+                                extend = 1;
+                                while(extend) {
+                                  choose[0] = 0.5;
+                                  choose[1] = 0.5;
+                                  switch (esl_rnd_FChoose(cfg.r, choose, 2)) {
+
+                                  /* conclude insert */
+                                  case 0: extend = 0; break;
+
+                                  /* extend insert*/
+                                  case 1: esl_sq_Grow(posseqs_fs[npos], &np);
+                                          x = esl_rnd_Roll(cfg.r, 4);
+                                          if ((status = esl_sq_XAddResidue(posseqs_fs[npos], x)) != eslOK) goto ERROR;
+                                          /* record location of indel */
+                                          fprintf(cfg.fsposfp, "%-35s %c %8" PRId64 "\n",
+                                          posseqs_fs[npos]->desc,  /* sequence*/
+                                          'I', /* I or D */
+                                          posseqs_fs[npos]->n); /* position */
+                                          break;
+                                  }
+                                }
+
+                                /* add next sequence residue */
+                                x = posseqs[npos]->dsq[c];
+                                if ((status = esl_sq_XAddResidue(posseqs_fs[npos], x)) != eslOK) goto ERROR;
+                                break;
+
+                        /* delete */
+                        case 1: /* record location of indel */
+                                fprintf(cfg.fsposfp, "%-35s %c %8" PRId64 "\n",
+                                posseqs_fs[npos]->desc,  /* sequence*/
+                                'D', /* I or D */
+                                posseqs_fs[npos]->n); /* position */
+
+                                /* deletion extention probability */
+                                if(c != posseqs[npos]->n) extend = 1;
+                                else extend = 0;
+                                while(extend) {
+                                  choose[0] = 0.5;
+                                  choose[1] = 0.5;
+                                  switch (esl_rnd_FChoose(cfg.r, choose, 2)) {
+
+                                    /* conclude detetion */
+                                    case 0: extend = 0; break;
+
+                                    /* extend deltetion */
+                                    case 1:
+
+                                    /* record location of indel */
+                                    fprintf(cfg.fsposfp, "%-35s %c %8" PRId64 "\n",
+                                          posseqs_fs[npos]->desc,  /* sequence*/
+                                          'D', /* I or D */
+                                          posseqs_fs[npos]->n); /* position */
+
+                                    /* move one position in original sequence */
+                                    c++;
+                                    break;
+                                  }
+                                }
+                                break;
+                        }
+                }
+                  if ((status = esl_sq_XAddResidue(posseqs_fs[npos], eslDSQ_SENTINEL)) != eslOK) goto ERROR;
+              }
+
+              /* print frameshift sequence */
+              poslen_total_fs += posseqs_fs[npos]->n;
+
+              /* record frameshift sequence data */
+              fprintf(cfg.ppossummfp, "%-35s %-35s %-35s %8d %8" PRId64 "\n",
+              posseqs_fs[npos]->desc,  /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
+              posseqs_fs[npos]->name,  /* positive sequence name (from input MSA) */
+              posseqs_fs[npos]->name,  /* again, positive sequence name (from input MSA) */
+              1, posseqs_fs[npos]->n); /* start, stop */
+
+            } else {
+
+              /* Write the sequence to the positives-only output file, and its info the positives-only table */
+              fprintf(cfg.ppossummfp, "%-35s %-35s %-35s %8d %8" PRId64 "\n",
+                posseqs[npos]->desc,  /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
+                posseqs[npos]->name,  /* positive sequence name (from input MSA) */
+                posseqs[npos]->name,  /* again, positive sequence name (from input MSA) */
+                1, posseqs[npos]->n); /* start, stop */
+            }
             npos++;
             npos_this_msa++;
           }
@@ -849,20 +1130,28 @@ main(int argc, char **argv)
   }
 
   /* Generate the negative sequences and embed the positives to create the benchmark sequences */
-  if (nali > 0)
-      if((status = synthesize_negatives_and_embed_positives(go, &cfg, posseqs, npos, 
+  if (nali > 0) {
+     if(cfg.frameshift > 0) {
+      if((status = synthesize_negatives_and_embed_positives(go, &cfg, posseqs_fs, npos, 
                             decoymsafp, 
                             decoy_alphabet,
                             num_decoy_ORFs, 
                             decoy_msa_names, 
                             num_decoy_msa_names 
                 )) != eslOK) esl_fatal("Failed to systhesize negatives and embed decoys and positives.");
-
+    } else {
+       if((status = synthesize_negatives_and_embed_positives(go, &cfg, posseqs, npos,
+                            decoymsafp,
+                            decoy_alphabet,
+                            num_decoy_ORFs,
+                            decoy_msa_names,
+                            num_decoy_msa_names
+                )) != eslOK) esl_fatal("Failed to systhesize negatives and embed decoys and positives.");
+    }
+  }
 
   fclose(cfg.out_dnamsafp);
-  fclose(cfg.out_aamsafp);
   fclose(cfg.out_bmkfp);
-  fclose(cfg.out_posfp);
   fclose(cfg.possummfp);
   fclose(cfg.ppossummfp);
   if(cfg.negsummfp != NULL) fclose(cfg.negsummfp);
@@ -1025,20 +1314,20 @@ add_decoy_ORFs_to_positive_sequence_list(struct cfg_s *cfg,
        * name. For example: "tRNA/3" for the third tRNA.
        */
       esl_sq_FormatDesc((*posseqs)[*npos], "%s/%d", decoy_msa_names[decoy_msa_index], seq_num);
-      /* Write the sequence to the positives-only output file, and its info the positives-only table */
+
+       /* Write the sequence to the positives-only output file, and its info the positives-only table */
       esl_sqio_Write(cfg->orfseqfp, (*posseqs)[*npos], eslSQFILE_FASTA, FALSE);
       fprintf(cfg->orfppossumfp, "%-35s %-35s %-35s %8d %8" PRId64 "\n",
-         (*posseqs)[*npos]->desc,  /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
-         (*posseqs)[*npos]->name,  /* positive sequence name (from input MSA) */
-         (*posseqs)[*npos]->name,  /* again, positive sequence name (from input MSA) */
-         1, (*posseqs)[*npos]->n); /* start, stop */
-      
+      (*posseqs)[*npos]->desc,  /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
+      (*posseqs)[*npos]->name,  /* positive sequence name (from input MSA) */
+      (*posseqs)[*npos]->name,  /* again, positive sequence name (from input MSA) */
+      1, (*posseqs)[*npos]->n); /* start, stop */
+
       (*npos)++;
-//      decoy_dna_seq = NULL;
-  
       num_decoy_seq_inserted++;
       printf("Added %d decoy sequences\n",num_decoy_seq_inserted);
     }
+  
 
     /* 
      * we do not need to shuffle the array of positive sequences and shuffled
@@ -2290,8 +2579,9 @@ create_ssi_index(ESL_MSAFILE *afp)
     esl_fatal("Failed to add MSA file %s to new SSI index\n", afp->bf->filename);
 
   printf("Working...    "); 
+ 
   fflush(stdout);
-  
+
   while ((status = esl_msafile_Read(afp, &msa)) != eslEOF)
     {
       if (status != eslOK) 
@@ -2310,7 +2600,7 @@ create_ssi_index(ESL_MSAFILE *afp)
       
       esl_msa_Destroy(msa);
     }
-  
+
   if (esl_newssi_Write(ns) != eslOK) 
     esl_fatal("Failed to write keys to ssi file %s\n", ssifile);
 
