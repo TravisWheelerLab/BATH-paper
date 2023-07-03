@@ -2,9 +2,9 @@
  * Modified from HMMER's create-profmark.c. 
  * 
  * Usage:
- *   ./framemark-create <basename> <DNA msa file> <blast path> <easle path> <background hmm file> <frameshift rate>
+ *   ./framemark-create <basename> <DNA msa file> <AA msa file> <blast path> <easle path> <background hmm file> <frameshift rate>
  * For example:
- *   ./framemark-create framemark01 /misc/data0/databases/DNA.msa /misc/data0/databases/protein.msa /ncbi-blast-2.13.0+/bin/ /hmmer/easel/miniapps/ 0.01
+ *   ./framemark-create framemark01 /misc/data0/databases/DNA.msa /misc/data0/databases/AA.msa /misc/data0/databases/protein.msa /ncbi-blast-2.13.0+/bin/ /hmmer/easel/miniapps/ 0.01
  *
  * There are three types of sequences:
  * 1. positives:
@@ -90,9 +90,9 @@ static ESL_OPTIONS options[] = {
   { "--markov1", eslARG_NONE,    FALSE,     NULL, NULL,       NULL, "-S", SHUF_OPTS,       "with -S, generate with 1st order Markov properties per input",       99 },
 
   /* Options forcing which alphabet we're working in (normally autodetected) */
-  { "--amino",  eslARG_NONE,     FALSE,     NULL, NULL,       NULL, NULL, "--dna,--rna",   "<msafile> contains protein alignments",                              3 },
-  { "--dna",    eslARG_NONE,     FALSE,     NULL, NULL,       NULL, NULL, "--amino,--rna", "<msafile> contains DNA alignments",                                  3 },
-  { "--rna",    eslARG_NONE,     FALSE,     NULL, NULL,       NULL, NULL, "--amino,--dna", "<msafile> contains RNA alignments",                                  3 },
+  { "--amino",  eslARG_NONE,     FALSE,     NULL, NULL,       NULL, NULL, "--dna,--rna",   "<msafile> contains protein alignments",                              99 },
+  { "--dna",    eslARG_NONE,     FALSE,     NULL, NULL,       NULL, NULL, "--amino,--rna", "<msafile> contains DNA alignments",                                  99 },
+  { "--rna",    eslARG_NONE,     FALSE,     NULL, NULL,       NULL, NULL, "--amino,--dna", "<msafile> contains RNA alignments",                                  99 },
 
   /* Other options */
   { "--minDPL", eslARG_INT,      "100",     NULL, NULL,       NULL, NULL, NULL,            "minimum segment length for DP shuffling",                            4 },
@@ -109,7 +109,8 @@ static ESL_OPTIONS options[] = {
 };
 
 struct cfg_s {
-  ESL_ALPHABET   *abc;           /* biological alphabet             */
+  ESL_ALPHABET   *abc_dna;           /* biological alphabet             */
+  ESL_ALPHABET   *abc_aa;           /* biological alphabet             */
   ESL_RANDOMNESS *r;             /* random number generator         */
   ESL_HMM        *hmm;           /* HMM for generating background seqs */
   double          fragfrac;      /* seqs less than x*avg length are removed from alignment  */
@@ -124,6 +125,7 @@ struct cfg_s {
   int             max_families;  /* maximum nuber of test & train families to read in from premade sets */
 
   FILE           *out_dnamsafp;  /* output: DNA training MSAs  */
+  FILE           *out_aamsafp;   /* output: Amino Acod training MSAs  */
   FILE           *out_bmkfp;     /* output: benchmark sequences */
 
   FILE           *orfseqfp;      /* output: shuffled decoy ORF sequences */
@@ -212,19 +214,22 @@ main(int argc, char **argv)
   ESL_GETOPTS  *go                        = NULL;      /* command line configuration                                        */
   struct cfg_s  cfg;                                   /* application configuration                                         */
   char         *basename                  = NULL;      /* base of the output file names                                     */
-  char         *alifile                   = NULL;      /* alignment file name                                               */
+  char         *alifile_dna               = NULL;      /* dna alignment file name                                           */
+  char         *alifile_aa                = NULL;      /* amino acid alignment file name                                    */
   char         *dbfile                    = NULL;      /* name of seq db file                                               */
   char         *hmmfile                   = NULL;      /* name of hmm file                                                  */
   char         *ttfile                    = NULL;      /* name of the premade test and train set file                       */
   char          outfile[256];                          /* name of an output file                                            */
   int           alifmt;                                /* format code for alifile                                           */
   int           dbfmt;                                 /* format code for dbfile                                            */
-  ESL_MSAFILE *afp                        = NULL;      /* open alignment file                                               */
+  ESL_MSAFILE *afp_dna                    = NULL;      /* open alignment file - DNA                                              */
+  ESL_MSAFILE *afp_aa                     = NULL;      /* open alignment file - Amino Acid                                              */
   ESL_MSA      *origmsa                   = NULL;      /* one multiple sequence alignment                                   */
   ESL_MSA      *msa                       = NULL;      /* MSA after frags are removed                                       */
   ESL_MSA      *trainmsa                  = NULL;      /* training set, aligned                                             */
+  ESL_MSA      *trainmsa_aa               = NULL;      /* training set, aligned                                             */
   ESL_MSA      *testmsa                   = NULL;      /* test set, aligned                          */
-  ESL_MSA      *testmsa_AA                   = NULL;    /* test set, aligned, in amino acids                          */
+  ESL_MSA      *testmsa_aa                = NULL;      /* test set, aligned                          */
   ESL_MSA      *tmpmsa                    = NULL;      /* tmp aligned training/testing set, used if --tfile                 */
   int          *i_am_train                = NULL;      /* [0..msa->nseq-1]: 1 if train seq, 0 if not                        */
   int          *i_am_test                 = NULL;      /* [0..msa->nseq-1]: 1 if test  seq, 0 if not                        */
@@ -286,17 +291,18 @@ main(int argc, char **argv)
   if (esl_opt_GetBoolean(go, "-h"))                    cmdline_help(argv[0], go);
 
   if ((  esl_opt_GetBoolean(go, "--iid") && esl_opt_ArgNumber(go) != 4) || 
-      (! esl_opt_GetBoolean(go, "--iid") && esl_opt_ArgNumber(go) != 6)) { 
+      (! esl_opt_GetBoolean(go, "--iid") && esl_opt_ArgNumber(go) != 7)) { 
       cmdline_failure(argv[0], "Incorrect number of command line arguments\n");
   }
   basename = esl_opt_GetArg(go, 1); 
-  alifile  = esl_opt_GetArg(go, 2);
-  blast_bin_path  = esl_opt_GetArg(go, 3);
-  esl_miniapps_path = esl_opt_GetArg(go, 4);
+  alifile_dna  = esl_opt_GetArg(go, 2);
+  alifile_aa  = esl_opt_GetArg(go, 3);
+  blast_bin_path  = esl_opt_GetArg(go, 4);
+  esl_miniapps_path = esl_opt_GetArg(go, 5);
 
   if(! esl_opt_GetBoolean(go, "--iid")) { 
-    if(esl_opt_GetBoolean(go, "-S")) dbfile  = esl_opt_GetArg(go, 5);
-    else                             hmmfile = esl_opt_GetArg(go, 5);
+    if(esl_opt_GetBoolean(go, "-S")) dbfile  = esl_opt_GetArg(go, 6);
+    else                             hmmfile = esl_opt_GetArg(go, 6);
   }
   alifmt   = eslMSAFILE_STOCKHOLM;
   dbfmt    = eslSQFILE_FASTA;
@@ -317,7 +323,8 @@ main(int argc, char **argv)
   /* Set up the configuration structure shared amongst functions here */
   if (esl_opt_IsDefault(go, "--seed"))   cfg.r = esl_randomness_CreateTimeseeded();
   else                                   cfg.r = esl_randomness_Create(esl_opt_GetInteger(go, "--seed"));
-  cfg.abc        = NULL;                  /* until we open the MSA file, below */
+  cfg.abc_dna    = NULL;                  /* until we open the MSA file, below */
+  cfg.abc_aa    = NULL;                  /* until we open the MSA file, below */
   cfg.hmm        = NULL;
   cfg.fragfrac   = esl_opt_GetReal(go, "-F");
   cfg.idthresh1  = esl_opt_GetReal(go, "-1");
@@ -331,7 +338,7 @@ main(int argc, char **argv)
   cfg.max_ntest  = (esl_opt_IsOn(go, "--maxtest")  ? esl_opt_GetInteger(go, "--maxtest")  : 0);
   cfg.max_ntrain = (esl_opt_IsOn(go, "--maxtrain") ? esl_opt_GetInteger(go, "--maxtrain") : 0);
   cfg.max_families = (esl_opt_IsOn(go, "--maxfams") ? esl_opt_GetInteger(go, "--maxfams") : (cfg.nneg * cfg.negL / 1000000));
-  cfg.frameshift   = atof( esl_opt_GetArg(go, 6) );
+  cfg.frameshift   = atof( esl_opt_GetArg(go, 7) );
 
   if (cfg.max_ntest>0  && cfg.max_ntest  < cfg.min_ntest)   esl_fatal("Conflict between -E and --maxtest");
   if (cfg.max_ntrain>0 && cfg.max_ntrain < cfg.min_ntrain)  esl_fatal("Conflict between -R and --maxtrain");
@@ -340,6 +347,8 @@ main(int argc, char **argv)
 
   if (snprintf(outfile, 256, "%s.DNA.msa", basename) >= 256)  esl_fatal("Failed to construct output DNA MSA file name");
   if ((cfg.out_dnamsafp = fopen(outfile, "w"))      == NULL)  esl_fatal("Failed to open DNA MSA output file %s\n", outfile);
+  if (snprintf(outfile, 256, "%s.AA.msa", basename) >= 256)  esl_fatal("Failed to construct output AA MSA file name");
+  if ((cfg.out_aamsafp = fopen(outfile, "w"))      == NULL)  esl_fatal("Failed to open AA MSA output file %s\n", outfile);
   if (snprintf(outfile, 256, "%s.fa",  basename) >= 256)   esl_fatal("Failed to construct output FASTA file name");
   if ((cfg.out_bmkfp = fopen(outfile, "w"))      == NULL)  esl_fatal("Failed to open FASTA output file %s\n", outfile);
   if (snprintf(outfile, 256, "%s.pos", basename) >= 256)      esl_fatal("Failed to construct pos test set summary file name");
@@ -466,22 +475,18 @@ main(int argc, char **argv)
   }
    
   /* Open the MSA file */
-  if      (esl_opt_GetBoolean(go, "--amino"))   cfg.abc = esl_alphabet_Create(eslAMINO);
-  else if (esl_opt_GetBoolean(go, "--dna"))     cfg.abc = esl_alphabet_Create(eslDNA);
-  else if (esl_opt_GetBoolean(go, "--rna"))     cfg.abc = esl_alphabet_Create(eslRNA);
-  if((status = esl_msafile_Open(&(cfg.abc), alifile, NULL, alifmt, NULL, &afp)) != eslOK) { 
-    esl_msafile_OpenFailure(afp, status);
+  if((status = esl_msafile_Open(&(cfg.abc_dna), alifile_dna, NULL, alifmt, NULL, &afp_dna)) != eslOK) { 
+    esl_msafile_OpenFailure(afp_dna, status);
   }
 
-  if (cfg.abc->type == eslAMINO) esl_composition_SW34(cfg.fq);
-  else                           esl_vec_DSet(cfg.fq, cfg.abc->K, 1.0 / (double) cfg.abc->K);
+  esl_vec_DSet(cfg.fq, cfg.abc_dna->K, 1.0 / (double) cfg.abc_dna->K);
 
   /* Open and read the HMM file of database file, depending on if -S was enabled or not */
   if(hmmfile != NULL) read_hmmfile(hmmfile, &(cfg.hmm));
   if(dbfile != NULL)  process_dbfile(&cfg, dbfile, dbfmt);
 
-  tmp_seq1 = esl_sq_CreateDigital(cfg.abc);  
-  tmp_seq2 = esl_sq_CreateDigital(cfg.abc);
+  tmp_seq1 = esl_sq_CreateDigital(cfg.abc_dna);  
+  tmp_seq2 = esl_sq_CreateDigital(cfg.abc_dna);
 
   if(esl_opt_IsOn(go, "--pre")) {
     
@@ -490,10 +495,10 @@ main(int argc, char **argv)
      * each family) and count the number of families 
      * to process so we can print status message to user */
     num_msas_to_process = 0;
-    while ((status = esl_msafile_Read(afp, &origmsa)) != eslEOF)
+    while ((status = esl_msafile_Read(afp_dna, &origmsa)) != eslEOF)
     {
       if (status != eslOK) 
-        esl_msafile_ReadFailure(afp, status);
+        esl_msafile_ReadFailure(afp_dna, status);
        
        if(strncmp("TRAIN", origmsa->name, 5) == 0) {
          trainmsa = esl_msa_Clone(origmsa);
@@ -505,7 +510,7 @@ main(int argc, char **argv)
            familiy_set[num_msas_to_process] = TRUE;
            num_msas_to_process++; 
            if(num_msas_to_process > MAX_TT_MSA_NAMES)
-             esl_fatal("more than the maximum of %d familiies in msafile %s.", MAX_TT_MSA_NAMES, alifile);
+             esl_fatal("more than the maximum of %d familiies in msafile %s.", MAX_TT_MSA_NAMES, alifile_dna);
          }  
          else 
            esl_fatal("msafile used with --pre flag must be properly formatted tfile.");
@@ -515,9 +520,9 @@ main(int argc, char **argv)
        } 
        esl_msa_Destroy(origmsa);
     }
-    esl_msafile_Close(afp);
+    esl_msafile_Close(afp_dna);
 
-    printf("framemark-create: Found %d families in %s\n", num_msas_to_process, alifile);
+    printf("framemark-create: Found %d families in %s\n", num_msas_to_process, alifile_dna);
 
     //If number of read in families exceeds maximum number of famlies allowed 
     //randomly remove one family at a time until there are no longer too many
@@ -531,12 +536,16 @@ main(int argc, char **argv)
       }
     } 
     
-    printf("framemark-create:Processing %d families from %s\n", num_msas_to_process, alifile);
+    printf("framemark-create:Processing %d families from %s\n", num_msas_to_process, alifile_dna);
 
     // reopen the premade test and train set file to so we can start reading
     // the MSAs and reset the file pointer to the beginning of the file
-    if((status = esl_msafile_Open(&(cfg.abc), alifile, NULL, alifmt, NULL, &afp)) != eslOK) {
-      esl_msafile_OpenFailure(afp, status);
+    if((status = esl_msafile_Open(&(cfg.abc_dna), alifile_dna, NULL, alifmt, NULL, &afp_dna)) != eslOK) {
+      esl_msafile_OpenFailure(afp_dna, status);
+    }
+
+    if((status = esl_msafile_Open(&(cfg.abc_aa), alifile_aa, NULL, alifmt, NULL, &afp_aa)) != eslOK) {
+      esl_msafile_OpenFailure(afp_aa, status);
     }
     
     nali         = 0;
@@ -545,13 +554,23 @@ main(int argc, char **argv)
     j            = 0;
     trainmsa     = NULL; 
     testmsa      = NULL;
-    while ((status = esl_msafile_Read(afp, &trainmsa)) != eslEOF) {
+    while ((status = esl_msafile_Read(afp_dna, &trainmsa)) != eslEOF) {
       if (status != eslOK)
-        esl_msafile_ReadFailure(afp, status);
+        esl_msafile_ReadFailure(afp_dna, status);
 
-      if ((status = esl_msafile_Read(afp, &testmsa)) != eslEOF) {
+      if ((status = esl_msafile_Read(afp_aa, &trainmsa_aa)) != eslEOF) {
         if (status != eslOK)
-          esl_msafile_ReadFailure(afp, status);
+          esl_msafile_ReadFailure(afp_aa, status);
+      }
+
+      if ((status = esl_msafile_Read(afp_dna, &testmsa)) != eslEOF) {
+        if (status != eslOK)
+          esl_msafile_ReadFailure(afp_dna, status);
+      }
+
+      if ((status = esl_msafile_Read(afp_aa, &testmsa_aa)) != eslEOF) {
+        if (status != eslOK)
+          esl_msafile_ReadFailure(afp_aa, status);
       }  
 
       if (familiy_set[j]) { //only process families that are a true set
@@ -599,10 +618,15 @@ main(int argc, char **argv)
           esl_msafile_Write(cfg.out_dnamsafp, tmpmsa, eslMSAFILE_STOCKHOLM);
 
           /* print family data to tbl file */
-          esl_dst_XAverageId(cfg.abc, tmpmsa->ax, tmpmsa->nseq, 10000, &avgid); /* 10000 is max_comparisons, before sampling kicks in */
+          esl_dst_XAverageId(cfg.abc_dna, tmpmsa->ax, tmpmsa->nseq, 10000, &avgid); /* 10000 is max_comparisons, before sampling kicks in */
           fprintf(cfg.tblfp, "%-20s  %3.0f%% %6d %6d %6d %6d %6d\n", family_name, 100.*avgid, (int) tmpmsa->alen, trainmsa->nseq, nfrags, tmpmsa->nseq, ntestseq);
           nali++;
           esl_msa_Destroy(tmpmsa);
+
+         if ((status = esl_msa_SequenceSubset(trainmsa_aa, i_am_train, &tmpmsa)) != eslOK) goto ERROR;
+         esl_msa_MinimGaps(tmpmsa, NULL, NULL, FALSE);
+         esl_msafile_Write(cfg.out_aamsafp, tmpmsa, eslMSAFILE_STOCKHOLM);
+         esl_msa_Destroy(tmpmsa);
 
          /* Save the positive test sequences, we'll embed these
           * in the long test sequences later */
@@ -622,7 +646,7 @@ main(int argc, char **argv)
 
               if(esl_opt_IsOn(go, "--over")) {
 	   
-                posseqs_over[npos] = esl_sq_CreateDigital(cfg.abc);
+                posseqs_over[npos] = esl_sq_CreateDigital(cfg.abc_dna);
                 esl_sq_SetName(posseqs_over[npos], posseqs[npos]->name);
                 esl_sq_SetAccession(posseqs_over[npos], posseqs[npos]->acc);
                 esl_sq_FormatDesc(posseqs_over[npos], posseqs[npos]->desc); 
@@ -647,7 +671,7 @@ main(int argc, char **argv)
               * name. For example: "tRNA/3" for the third tRNA.              */
               
             if(cfg.frameshift > 0) {
-              posseqs_fs[npos] = esl_sq_CreateDigital(cfg.abc);
+              posseqs_fs[npos] = esl_sq_CreateDigital(cfg.abc_dna);
               esl_sq_SetName(posseqs_fs[npos], posseqs[npos]->name);
               esl_sq_SetAccession(posseqs_fs[npos], posseqs[npos]->acc);
               esl_sq_FormatDesc(posseqs_fs[npos], posseqs[npos]->desc);
@@ -816,22 +840,22 @@ main(int argc, char **argv)
 
     //count the number of MSAs to process so we can print status message to user
     num_msas_to_process = 0;
-    while ((status = esl_msafile_Read(afp, &origmsa)) != eslEOF)
+    while ((status = esl_msafile_Read(afp_dna, &origmsa)) != eslEOF)
     {
       if (status != eslOK) 
-        esl_msafile_ReadFailure(afp, status);
+        esl_msafile_ReadFailure(afp_dna, status);
       num_msas_to_process++;
       esl_msa_Destroy(origmsa);
     }
-    esl_msafile_Close(afp);
+    esl_msafile_Close(afp_dna);
   
-  printf("framemark-create: Found %d alignments in %s\n", num_msas_to_process, alifile);
+  printf("framemark-create: Found %d alignments in %s\n", num_msas_to_process, alifile_dna);
 
 
     // reopen the alignment file to so we can start reading the MSAs
     // and reset the file pointer to the beginning of the file
-    if((status = esl_msafile_Open(&(cfg.abc), alifile, NULL, alifmt, NULL, &afp)) != eslOK) { 
-      esl_msafile_OpenFailure(afp, status);
+    if((status = esl_msafile_Open(&(cfg.abc_dna), alifile_dna, NULL, alifmt, NULL, &afp_dna)) != eslOK) { 
+      esl_msafile_OpenFailure(afp_dna, status);
     }
 
     /* Read and process MSAs one at a time  */
@@ -839,7 +863,7 @@ main(int argc, char **argv)
     npos = 0;
     poslen_total = 0;
     current_msa_number = 0;
-    while ((status = esl_msafile_Read(afp, &origmsa)) == eslOK)
+    while ((status = esl_msafile_Read(afp_dna, &origmsa)) == eslOK)
     {
       npos_this_msa = 0;
       if(origmsa->name == NULL) esl_fatal("All msa's must have a valid name (#=GC ID), alignment %d does not.", nali);
@@ -920,7 +944,7 @@ main(int argc, char **argv)
         esl_msa_MinimGaps(trainmsa, NULL, NULL, FALSE);
         esl_msafile_Write(cfg.out_dnamsafp, trainmsa, eslMSAFILE_STOCKHOLM);
     
-        esl_dst_XAverageId(cfg.abc, trainmsa->ax, trainmsa->nseq, 10000, &avgid); /* 10000 is max_comparisons, before sampling kicks in */
+        esl_dst_XAverageId(cfg.abc_dna, trainmsa->ax, trainmsa->nseq, 10000, &avgid); /* 10000 is max_comparisons, before sampling kicks in */
         fprintf(cfg.tblfp, "%-20s  %3.0f%% %6d %6d %6d %6d %6d\n", msa->name, 100.*avgid, (int) trainmsa->alen, msa->nseq, nfrags, trainmsa->nseq, ntestseq);
         nali++;
     
@@ -936,7 +960,7 @@ main(int argc, char **argv)
 
               if(esl_opt_IsOn(go, "--over")) {
 	   
-                posseqs_over[npos] = esl_sq_CreateDigital(cfg.abc);
+                posseqs_over[npos] = esl_sq_CreateDigital(cfg.abc_dna);
                 esl_sq_SetName(posseqs_over[npos], posseqs[npos]->name);
                 esl_sq_SetAccession(posseqs_over[npos], posseqs[npos]->acc);
                 esl_sq_FormatDesc(posseqs_over[npos], posseqs[npos]->desc); 
@@ -1119,8 +1143,8 @@ main(int argc, char **argv)
       esl_msa_Destroy(msa);
     }
 
-    if (status != eslEOF)           esl_msafile_ReadFailure(afp, status);
-    else if (nali   == 0)           esl_fatal("No alignments found in file %s\n", alifile);
+    if (status != eslEOF)           esl_msafile_ReadFailure(afp_dna, status);
+    else if (nali   == 0)           esl_fatal("No alignments found in file %s\n", alifile_dna);
   }
   printf("cfg.nneg %d cfg.negL %d '-X' %f\n", cfg.nneg, cfg.negL, esl_opt_GetReal(go, "-X"));
   /* Make sure we summed length of the positives isn't above the max allowed */
@@ -1151,6 +1175,7 @@ main(int argc, char **argv)
   }
 
   fclose(cfg.out_dnamsafp);
+  fclose(cfg.out_aamsafp);
   fclose(cfg.out_bmkfp);
   fclose(cfg.possummfp);
   fclose(cfg.ppossummfp);
@@ -1159,8 +1184,10 @@ main(int argc, char **argv)
   if(cfg.tfp       != NULL) fclose(cfg.tfp);
   fclose(cfg.tblfp);
   esl_randomness_Destroy(cfg.r);
-  esl_alphabet_Destroy(cfg.abc);
-  esl_msafile_Close(afp);
+  esl_alphabet_Destroy(cfg.abc_dna);
+  esl_alphabet_Destroy(cfg.abc_aa);
+  esl_msafile_Close(afp_dna);
+  esl_msafile_Close(afp_aa);
   if(decoy_alphabet != NULL)
     esl_alphabet_Destroy(decoy_alphabet);
   if(decoymsafp != NULL) {
@@ -1354,13 +1381,13 @@ ERROR:
 static int
 process_dbfile(struct cfg_s *cfg, char *dbfile, int dbfmt)
 {
-  ESL_SQ     *sq    = esl_sq_CreateDigital(cfg->abc);
+  ESL_SQ     *sq    = esl_sq_CreateDigital(cfg->abc_dna);
   int         status;
   int         nread;      /* number of sequences of at least length cfg->negchunkL read from db */
   int         nrequired;  /* number of sequences of at least length cfg->negchunkL required in db */
 
   /* Open the sequence file in digital mode */
-  status = esl_sqfile_OpenDigital(cfg->abc, dbfile, dbfmt, NULL, &(cfg->dbfp));
+  status = esl_sqfile_OpenDigital(cfg->abc_dna, dbfile, dbfmt, NULL, &(cfg->dbfp));
   if      (status == eslENOTFOUND) esl_fatal("No such file %s", dbfile);
   else if (status == eslEFORMAT)   esl_fatal("Format of seqfile %s unrecognized.", dbfile);
   else if (status == eslEINVAL)    esl_fatal("Can't autodetect stdin or .gz.");
@@ -2214,8 +2241,8 @@ synthesize_negatives_and_embed_positives(ESL_GETOPTS *go, struct cfg_s *cfg, ESL
    * inserted at their corresponding positions and orientations. The
    * length of the benchmark sequence will be cfg->negL+negseqs_poslen[i]. 
    */
-  bmksq = esl_sq_CreateDigital(cfg->abc);
-  negsq = esl_sq_CreateDigital(cfg->abc);
+  bmksq = esl_sq_CreateDigital(cfg->abc_dna);
+  negsq = esl_sq_CreateDigital(cfg->abc_dna);
   for (i = 0; i < cfg->nneg; i++) {
     /* Allocate and initialize the benchmark sequence */
     esl_sq_GrowTo(bmksq, cfg->negL+negseqs_poslen[i]);
@@ -2363,8 +2390,8 @@ synthesize_negatives_and_embed_positives(ESL_GETOPTS *go, struct cfg_s *cfg, ESL
 static int
 set_random_segment(ESL_GETOPTS *go, struct cfg_s *cfg, FILE *logfp, ESL_DSQ *dsq, int L)
 {
-  ESL_SQ  *sq           = esl_sq_CreateDigital(cfg->abc);
-  ESL_SQ  *dbsq         = esl_sq_CreateDigital(cfg->abc);
+  ESL_SQ  *sq           = esl_sq_CreateDigital(cfg->abc_dna);
+  ESL_SQ  *dbsq         = esl_sq_CreateDigital(cfg->abc_dna);
   int      minDPL       = esl_opt_GetInteger(go, "--minDPL"); 
   int      db_dependent = (esl_opt_GetBoolean(go, "--iid") == TRUE ? FALSE : TRUE);
   char    *pkey         = NULL;
@@ -2436,12 +2463,12 @@ set_random_segment(ESL_GETOPTS *go, struct cfg_s *cfg, FILE *logfp, ESL_DSQ *dsq
       (! esl_opt_GetBoolean(go, "--markov1")) && 
       (! esl_opt_GetBoolean(go, "--iid")))) { 
     if (L < minDPL)                             status = esl_rsq_XShuffle  (cfg->r, sq->dsq, L, sq->dsq);
-    else                                        status = esl_rsq_XShuffleDP(cfg->r, sq->dsq, L, cfg->abc->Kp, sq->dsq);
+    else                                        status = esl_rsq_XShuffleDP(cfg->r, sq->dsq, L, cfg->abc_dna->Kp, sq->dsq);
   }
   else if (esl_opt_GetBoolean(go, "--mono"))    status = esl_rsq_XShuffle  (cfg->r, sq->dsq, L, sq->dsq);
-  else if (esl_opt_GetBoolean(go, "--markov0")) status = esl_rsq_XMarkov0  (cfg->r, sq->dsq, L, cfg->abc->Kp, sq->dsq);
-  else if (esl_opt_GetBoolean(go, "--markov1")) status = esl_rsq_XMarkov1  (cfg->r, sq->dsq, L, cfg->abc->Kp, sq->dsq);
-  else if (esl_opt_GetBoolean(go, "--iid"))     status = esl_rsq_xIID      (cfg->r, cfg->fq, cfg->abc->K, L, sq->dsq);
+  else if (esl_opt_GetBoolean(go, "--markov0")) status = esl_rsq_XMarkov0  (cfg->r, sq->dsq, L, cfg->abc_dna->Kp, sq->dsq);
+  else if (esl_opt_GetBoolean(go, "--markov1")) status = esl_rsq_XMarkov1  (cfg->r, sq->dsq, L, cfg->abc_dna->Kp, sq->dsq);
+  else if (esl_opt_GetBoolean(go, "--iid"))     status = esl_rsq_xIID      (cfg->r, cfg->fq, cfg->abc_dna->K, L, sq->dsq);
   if (status != eslOK) esl_fatal("esl's shuffling failed");
 
   memcpy(dsq, sq->dsq+1, sizeof(ESL_DSQ) * L);
