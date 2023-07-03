@@ -143,7 +143,7 @@ while ($line = <>)
     if((($shuffledorf != 1) && (! $seen_matchHH{$fam}{$match})) || ($shuffledorf == 1))  { 
         # if seen_matchHH{$fam}{$match}, we've already seen a (better scoring) match to this positive, skip it
 	# note that seen_matchHH{$fam}{$match} is only set below for POSITIVES, so decoys will never be skipped
-	if ($match =~ m/^decoy/ ) { #|| ($match !~ m/^$fam\/\d+/)) {
+	if ($match =~ m/^decoy/ ) { 
 	    # negative
 	    $nlisted++;
             if ($shuffledorf != 1) {
