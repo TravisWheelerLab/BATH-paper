@@ -1,5 +1,7 @@
 #!/bin/bash
 #SBATCH --time=1:00:00
+#SBATCH --partition=standard
+#SBATCH --account=twheeler
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16
@@ -26,6 +28,7 @@ cd $2
 ~/ncbi-blast-2.13.0+/bin/makeblastdb -dbtype nucl -in $1.fa
 
 # make last train file file using full query set
+$6/../easel/miniapps/esl-reformat fasta $1.AA.msa > $1.AA.fa
 $4/lastdb -P16 -q -c $1.AA.fa.db $1.AA.fa
 $4/last-train -P16 --codon $1.AA.fa.db $1.fa > $1.train
 
