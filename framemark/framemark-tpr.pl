@@ -13,6 +13,7 @@ my $tool = shift;
 
 my %num_targets = ();
 my %tp_found = ();
+my %fp_found = ();
 my %tp_before_fp = ();
 my @fields;
 my $fam;
@@ -30,7 +31,10 @@ while ($line = <MER>)
         @fields   = split(' ', $line, 6);
         $fam = $fields[0];
         if ($fam =~ m/^\*/) { next; }
-        $num_targets{$fam} = $fields[2]; 
+        $num_targets{$fam}   = $fields[2]; 
+        $tp_found{$fam}      = -1;
+	$fp_found{$fam}      = -1;
+        $tp_before_fp{$fam}  = -1;
     }
 }
 close(MER);
@@ -45,17 +49,19 @@ while ($line = <MER>)
         @fields   = split(' ', $line, 6);
 	$fam = $fields[2];
 	$type = $fields[5];
+        
+        #if this is a positive
 	if ($type =~ m/\+/) {
-            if (exists $tp_found{$fam}) { $tp_found{$fam}++;   } 
-            else                        { $tp_found{$fam} = 1; }
-         
-            if    (exists $tp_before_fp{$fam})            { next; }   
-            elsif ($tp_found{$fam} == $num_targets{$fam}) { $tp_before_fp{$fam} = $tp_found{$fam}; }
-        }
-        else {
-            if    (exists $tp_before_fp{$fam}) { next; }
-	    elsif (exists $tp_found{$fam})     { $tp_before_fp{$fam} = $tp_found{$fam}; }
-            else                               { $tp_before_fp{$fam} = 0; }
+            if ($tp_found{$fam} != -1) { $tp_found{$fam}++;   } 
+            else                       { $tp_found{$fam} = 1; }
+        #if this is a negative
+        } else {
+            if ($fp_found{$fam} != -1) { $fp_found{$fam}++;   }
+            else                       { $fp_found{$fam} = 1; }
+
+            if    ($tp_before_fp{$fam} != -1) { next; }
+	    elsif ($tp_found{$fam}     != -1) { $tp_before_fp{$fam} = $tp_found{$fam}; }
+            else                              { $tp_before_fp{$fam} = 0; }
         }
     }
 }
@@ -65,12 +71,14 @@ close(MER);
 printf("%10s %20s %10s %10s %16s\n", "# tool", "family", "total tp", "tp found", "tp before 1st fp");
 
 foreach $fam (keys %num_targets) {
+    if($fp_found{$fam} == -1) { $tp_before_fp{$fam} = $tp_found{$fam}; }
+
     printf("%10s %20s %10d ", $tool, $fam, $num_targets{$fam});
 
-    if (exists $tp_found{$fam}) { printf("%10d ", $tp_found{$fam}); }
-    else                        { printf("%10d ", 0); }
+    if ($tp_found{$fam} != -1) { printf("%10d ", $tp_found{$fam}); }
+    else                       { printf("%10d ", 0); }
 
-    if (exists $tp_before_fp{$fam}) { printf("%10d\n", $tp_before_fp{$fam}); }
-    else                            { printf("%10d\n", 0); }
+    if ($tp_before_fp{$fam} != -1) { printf("%10d\n", $tp_before_fp{$fam}); }
+    else                           { printf("%10d\n", 0); }
 }
 
