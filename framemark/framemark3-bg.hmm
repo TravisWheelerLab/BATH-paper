@@ -1,6 +1,7 @@
-# rmark3-bg.hmm
-# HMM parameter file read by Infernal's rmark-create program for
-# generating an RNA homology search benchmark.
+# framemark3-bg.hmm
+# HMM parameter file read by framemark-create.c for
+# generating an DNA homology search benchmark. 
+# Coppied from Infernal's rmark-create program
 # 
 # This file contains 2*<N>+3 non-comment lines, where <N> is the
 # number of states. For this file, <N> is 15. So there are 33 non-comment lines.

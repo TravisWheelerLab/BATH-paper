@@ -8,10 +8,10 @@
 
 use Time::HiRes;
 
-$usage = "Usage: $0 \n\t<execdir>\n\t<scriptdir>\n\t<outdir>\n\t<outname>\n\t<queryfile>\n\t<posfile>\n\t<targetfile>\n\t<cpus>\n\t<e-max>\n"; 
-if(scalar(@ARGV) != 9) { printf("$usage\n$options_usage"); exit(1); }
+$usage = "Usage: $0 \n\t<execdir>\n\t<scriptdir>\n\t<outdir>\n\t<outname>\n\t<queryfile>\n\t<posfile>\n\t<targetfile>\n\t<cpus>\n\t<e-max>\n\t<targetlength>\n"; 
+if(scalar(@ARGV) != 10) { printf("$usage\n$options_usage"); exit(1); }
 
-($execdir, $scriptdir, $outdir, $outname, $queryfile, $posfile, $targetfile, $cpus, $emax) = @ARGV;
+($execdir, $scriptdir, $outdir, $outname, $queryfile, $posfile, $targetfile, $cpus, $emax, $targetlen) = @ARGV;
 $outfile        = $outname . ".out";
 $tmpoutfile     = $outfile . ".tmp";
 $sorttmpoutfile = $outfile . ".tmp.sort";
@@ -35,13 +35,14 @@ if (! -e $posfile)                                      { die "$posfile doesn't 
 if (! -e $trainfile)                                    { die "$trainfile doesn't exist"; }
 if (! -e $idscript)                                     { die "positive identification script $idscript doesn't exist"; }
 
+$emax = $targetlen / $emax;
 
 open(TMPOUTFILE,">$outdir/$tmpoutfile") || die "failed to open $tmpoutfile";
 
 $runtime = -1 * Time::HiRes::time();
 
 # run last
-$command = "$lastal -p $trainfile -m100 -P$cpus -E$emax -K1 -fTAB $queryfile.db $targetfile  > $outdir/$outname.tmp";
+$command = "$lastal -p $trainfile -P$cpus -D$emax -K1 -fTAB $queryfile.db $targetfile  > $outdir/$outname.tmp";
 $status = system("$command");
 if ($status != 0) { die "FAILED: $command"; }
 
@@ -58,15 +59,15 @@ while (<OUTPUT>)
    $target      = $fields[6];
    $query       =  (split(/\./, $fields[1]))[1];
    if (index($fields[9], '+') != -1) {
-     $target_from = $fields[7];
+     $target_from = $fields[7] + 1;
      $target_to = $target_from + $fields[8] - 1;
    }
    else                              {
-     $target_from = $fields[10]  - $fields[7] + 1;
+     $target_from = $fields[10]  - $fields[7];
      $target_to   = $target_from - $fields[8] + 1;
    }
    $bitscore    = $fields[0];
-   @efield        = split('=', $fields[12], 2);
+   @efield        = split('=', $fields[13], 2);
    $evalue      = $efield[1];
    $frameshifts = 0;
    $frameshifts += () = $fields[11] =~ /:-2,/g;

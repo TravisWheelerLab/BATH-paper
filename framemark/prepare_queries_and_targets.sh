@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=1:00:00
+#SBATCH --time=10:00:00
 #SBATCH --partition=standard
 #SBATCH --account=twheeler
 #SBATCH --nodes=1
@@ -57,26 +57,24 @@ do
              j=$(($j + $7))
 	done
 
-$6/../easel/miniapps/esl-afetch -o queries/tbl$i.AA.msa -f $1.AA.msa split_names.txt
+    #fetch query subsetd from msa
+    $6/../easel/miniapps/esl-afetch -o queries/tbl$i.AA.msa -f $1.AA.msa split_names.txt
+    $6/../easel/miniapps/esl-afetch -o queries/tbl$i.DNA.msa -f $1.DNA.msa split_names.txt
 
-$6/../easel/miniapps/esl-afetch -o queries/tbl$i.DNA.msa -f $1.DNA.msa split_names.txt
+    #create unlaigned sequence file from the split Amino Acid query MSA
+    $6/../easel/miniapps/esl-reformat fasta queries/tbl$i.AA.msa > queries/tbl$i.AA.fa
 
-#create unlaigned sequence file from the split Amino Acid query MSA
-$6/../easel/miniapps/esl-reformat fasta queries/tbl$i.AA.msa > queries/tbl$i.AA.fa
+    # build last db file
+    $4/lastdb -P16 -q -c queries/tbl$i.AA.fa.db queries/tbl$i.AA.fa
 
-# build last db file
-$4/lastdb -P16 -q -c queries/tbl$i.AA.fa.db queries/tbl$i.AA.fa
+    #  build DNA hmms for nhmmer
+    $5/hmmbuild --cpu 16 queries/tbl$i.DNA.hmm queries/tbl$i.DNA.msa
 
-#  build DNA hmms for nhmmer
-$5/hmmbuild --cpu 16 queries/tbl$i.DNA.hmm queries/tbl$i.DNA.msa
+    # build Amino Acid hmms for hmmsearht
+    $5/hmmbuild --cpu 16 queries/tbl$i.AA.hmm queries/tbl$i.AA.msa
 
-# build Amino Acid hmms for hmmsearht
-$5/hmmbuild --cpu 16 queries/tbl$i.AA.hmm queries/tbl$i.AA.msa
-
-# build frameshift aware hmms for frahmmer
-$6/frahmmbuild --cpu 16 queries/tbl$i.AA.fhmm queries/tbl$i.AA.msa
+    # build frameshift aware hmms for frahmmer
+    $6/frahmmbuild --cpu 16 queries/tbl$i.AA.fhmm queries/tbl$i.AA.msa
 
 done
-
-
 

@@ -48,11 +48,10 @@ while (<OUTPUT>)
         $full_query = (split(' ', $query))[0];
         $query = (split('\.', $full_query))[1];
     }
-    elsif(/^framemark\d*\s*\(/ || /\+-/) {
+    elsif(/^framemark\d*\s*\(/) {
         @fields   = split(' ', $_, 22);
     	$target      = $fields[0];
-    	if ($target =~ /\+-/) { $target = $last_target; }
-    	else                  { $last_target = $target; }
+    	$last_target = $target; 
     	$target_from = $fields[15];
     	$target_to   = $fields[16];
     	$bitscore    = $fields[5];
@@ -60,6 +59,17 @@ while (<OUTPUT>)
     	$frameshifts = $fields[21];
     	printf TMPOUTFILE "%10g %10.1f %10d %10d %20s %35s %5d  %35s\n", $evalue, $bitscore, $target_from, $target_to, $target, $query, $frameshifts;
     }
+    elsif(/^\+-/) {
+        @fields   = split(' ', $_, 20);
+    	$target = $last_target; 
+    	$target_from = $fields[13];
+    	$target_to   = $fields[14];
+    	$bitscore    = $fields[3];
+    	$evalue      = $fields[4];
+    	$frameshifts = $fields[19];
+    	printf TMPOUTFILE "%10g %10.1f %10d %10d %20s %35s %5d  %35s\n", $evalue, $bitscore, $target_from, $target_to, $target, $query, $frameshifts;
+    }
+
 
 }
 

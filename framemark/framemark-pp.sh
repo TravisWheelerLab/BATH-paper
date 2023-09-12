@@ -6,6 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
 
+
 #stop the script if it attempts to use any unset variables 
 set -o nounset
 #stop the script if any command fails (returns non zero)
@@ -35,7 +36,7 @@ ls $3/*.time   | perl $1/framemark-time.pl > $3/$4.time
 cat $3/*out | sort ${sort_option} | perl $1/framemark-mer.pl $2 $3/$4.time >  $3/$4.mer
 
 # get coverage
-cat $3/*out | sort ${sort_option} | perl $1/framemark-coverage.pl $2 1e-5 > $3/$4.cover
+cat $3/*out | sort ${sort_option} | perl $1/framemark-coverage.pl $2 $5 > $3/$4.cover
 
 #get tpr
 perl $1/framemark-tpr.pl $3/$4.mer $5 > $3/$4.tpr

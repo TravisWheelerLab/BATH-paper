@@ -20,9 +20,10 @@
  * - negative sequences with >= 0 positives embedded 
  *   within them
  *
- * Seven output files are generated:
+ * Eight output files are generated:
  *   <basename>.tbl      - table summarizing the benchmark
  *   <basename>.DNA.msa  - MSA of DNA queries, stockholm format
+ *   <basename>.AA.msa   - MSA of amino acid queries, stockholm format
  *   <basename>.fa       - benchmark sequences, fasta format
  *   <basename>.pos      - table summarizing positive test set;
  *                         their locations in the benchmark seqs
@@ -74,7 +75,7 @@ static ESL_OPTIONS options[] = {
   { "-N",         eslARG_INT,    "10",      NULL, NULL,       NULL, NULL, NULL,            "number of benchmark seqs",                                         1 },
   { "-L",         eslARG_INT,    "1000000", NULL, "n>0",      NULL, NULL, NULL,            "full length of benchmark seqs prior to test seq embedding",        1 },
   
-  { "-C",         eslARG_INT,    "1000",    NULL, "n>0",      NULL, NULL, NULL,         "length of <seqdb> seqs to extract/shuffle when making test seqs",  1 },
+  { "-C",         eslARG_INT,    "1000",    NULL, "n>0",      NULL, NULL, "--iid",         "length of <seqdb> seqs to extract/shuffle when making test seqs",  99 },
   { "-X",         eslARG_REAL,   "0.05",    NULL, "0<x<=1.0", NULL, NULL, NULL,            "maximum fraction of total test seq covered by positives",          1 },
   { "-R",         eslARG_INT,    "5",       NULL, "n>0",      NULL, NULL, NULL,            "minimum number of training seqs per family",                       1 },
   { "-E",         eslARG_INT,    "1",       NULL, "n>0",      NULL, NULL, NULL,            "minimum number of test     seqs per family",                       1 },
@@ -127,6 +128,7 @@ struct cfg_s {
   FILE           *out_dnamsafp;  /* output: DNA training MSAs  */
   FILE           *out_aamsafp;   /* output: Amino Acod training MSAs  */
   FILE           *out_bmkfp;     /* output: benchmark sequences */
+  FILE           *out_posfp;     /* output: positive test sequences */
 
   FILE           *orfseqfp;      /* output: shuffled decoy ORF sequences */
   FILE           *orfpossumfp;   /* output: summary table of the decoy ORF test set in the benchmark seqs */
@@ -251,7 +253,6 @@ main(int argc, char **argv)
    ESL_SQ       *tmp_seq2                   = NULL;      /* temporarily holds test seq for overextention benchmarking                                */
 
   int64_t       poslen_total;                          /* total length of all positive seqs                                 */
-  int64_t       poslen_total_fs;
   double        avgid;
   void         *ptr;
   int           i, j; 
@@ -278,6 +279,7 @@ main(int argc, char **argv)
   char *        blast_bin_path            = NULL;
   char *        esl_miniapps_path         = NULL;
 
+  int           num_msas                  = 0;
   int           num_msas_to_process       = 0;
   int           current_msa_number        = 0;
   float choose[4];
@@ -351,6 +353,8 @@ main(int argc, char **argv)
   if ((cfg.out_aamsafp = fopen(outfile, "w"))      == NULL)  esl_fatal("Failed to open AA MSA output file %s\n", outfile);
   if (snprintf(outfile, 256, "%s.fa",  basename) >= 256)   esl_fatal("Failed to construct output FASTA file name");
   if ((cfg.out_bmkfp = fopen(outfile, "w"))      == NULL)  esl_fatal("Failed to open FASTA output file %s\n", outfile);
+  if (snprintf(outfile, 256, "%s.pfa",  basename) >= 256)  esl_fatal("Failed to construct output positive FASTA file name");
+  if ((cfg.out_posfp = fopen(outfile, "w"))      == NULL)  esl_fatal("Failed to open positive FASTA output file %s\n", outfile);
   if (snprintf(outfile, 256, "%s.pos", basename) >= 256)      esl_fatal("Failed to construct pos test set summary file name");
   if ((cfg.possummfp = fopen(outfile, "w"))      == NULL)     esl_fatal("Failed to open pos test set summary file %s\n", outfile);
   if (snprintf(outfile, 256, "%s.ppos", basename) >= 256)     esl_fatal("Failed to construct pos-only test set summary file name");
@@ -494,7 +498,6 @@ main(int argc, char **argv)
      * (has 1 TRAIN msa followed by on TEST msa for
      * each family) and count the number of families 
      * to process so we can print status message to user */
-    num_msas_to_process = 0;
     while ((status = esl_msafile_Read(afp_dna, &origmsa)) != eslEOF)
     {
       if (status != eslOK) 
@@ -507,9 +510,16 @@ main(int argc, char **argv)
          testmsa = esl_msa_Clone(origmsa);
          
          if(strcmp(trainmsa->name+6, testmsa->name+5) == 0) { 
-           familiy_set[num_msas_to_process] = TRUE;
-           num_msas_to_process++; 
-           if(num_msas_to_process > MAX_TT_MSA_NAMES)
+	     if(esl_opt_IsOn(go, "--over") && trainmsa->alen < 180) {
+	
+	         familiy_set[num_msas] = FALSE;
+	         num_msas++;
+	     } else {
+                 familiy_set[num_msas] = TRUE;
+		 num_msas++;
+                 num_msas_to_process++; 
+             }
+           if(num_msas > MAX_TT_MSA_NAMES)
              esl_fatal("more than the maximum of %d familiies in msafile %s.", MAX_TT_MSA_NAMES, alifile_dna);
          }  
          else 
@@ -522,14 +532,14 @@ main(int argc, char **argv)
     }
     esl_msafile_Close(afp_dna);
 
-    printf("framemark-create: Found %d families in %s\n", num_msas_to_process, alifile_dna);
+    printf("framemark-create: Found %d families in %s\n", num_msas, alifile_dna);
 
     //If number of read in families exceeds maximum number of famlies allowed 
     //randomly remove one family at a time until there are no longer too many
-    int families_read_in = num_msas_to_process;
+    
    
     while (num_msas_to_process > cfg.max_families) {
-      i = esl_rnd_Roll(cfg.r, families_read_in);
+      i = esl_rnd_Roll(cfg.r, num_msas);
       if (familiy_set[i] == TRUE) {
         familiy_set[i] = FALSE;
         num_msas_to_process--;
@@ -663,7 +673,6 @@ main(int argc, char **argv)
             
               }
 
-              poslen_total += posseqs[npos]->n;
 	
              /* Sequence description is set as a concatenation of the
               * family name and the sequence index in this family,
@@ -772,18 +781,23 @@ main(int argc, char **argv)
               }
 
               /* print frameshift sequence */
-              poslen_total_fs += posseqs_fs[npos]->n;
+              poslen_total += posseqs_fs[npos]->n;
 
-              /* record frameshift sequence data */
+          /*     Write the sequence to the positives-only output file, and its info the positives-only table */ 
+              esl_sqio_Write(cfg.out_posfp, posseqs_fs[npos], eslSQFILE_FASTA, FALSE); 
               fprintf(cfg.ppossummfp, "%-35s %-35s %-35s %8d %8" PRId64 "\n",
               posseqs_fs[npos]->desc,  /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
               posseqs_fs[npos]->name,  /* positive sequence name (from input MSA) */
               posseqs_fs[npos]->name,  /* again, positive sequence name (from input MSA) */
               1, posseqs_fs[npos]->n); /* start, stop */
+              npos++;
+              npos_this_msa++;
 
            } else { 
-         
+                
+              poslen_total += posseqs[npos]->n;
              /* Write the sequence to the positives-only output file, and its info the positives-only table */
+              esl_sqio_Write(cfg.out_posfp, posseqs[npos], eslSQFILE_FASTA, FALSE); 
               fprintf(cfg.ppossummfp, "%-35s %-35s %-35s %8d %8" PRId64 "\n",
                 posseqs[npos]->desc,  /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
                 posseqs[npos]->name,  /* positive sequence name (from input MSA) */
@@ -978,7 +992,6 @@ main(int argc, char **argv)
               }
 
 
-            poslen_total += posseqs[npos]->n;
             /* Sequence description is set as a concatenation of the
              * family name and the sequence index in this family,
              * separated by a '/', which never appears in an Rfam
@@ -1082,18 +1095,25 @@ main(int argc, char **argv)
               }
 
               /* print frameshift sequence */
-              poslen_total_fs += posseqs_fs[npos]->n;
+              poslen_total += posseqs_fs[npos]->n;
 
               /* record frameshift sequence data */
+             esl_sqio_Write(cfg.out_posfp, posseqs[npos], eslSQFILE_FASTA, FALSE);
               fprintf(cfg.ppossummfp, "%-35s %-35s %-35s %8d %8" PRId64 "\n",
               posseqs_fs[npos]->desc,  /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
               posseqs_fs[npos]->name,  /* positive sequence name (from input MSA) */
               posseqs_fs[npos]->name,  /* again, positive sequence name (from input MSA) */
               1, posseqs_fs[npos]->n); /* start, stop */
+	      npos++;
+              npos_this_msa++;
 
             } else {
 
+            poslen_total += posseqs[npos]->n;
+
               /* Write the sequence to the positives-only output file, and its info the positives-only table */
+
+              esl_sqio_Write(cfg.out_posfp, posseqs[npos], eslSQFILE_FASTA, FALSE);
               fprintf(cfg.ppossummfp, "%-35s %-35s %-35s %8d %8" PRId64 "\n",
                 posseqs[npos]->desc,  /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
                 posseqs[npos]->name,  /* positive sequence name (from input MSA) */
@@ -1177,6 +1197,7 @@ main(int argc, char **argv)
   fclose(cfg.out_dnamsafp);
   fclose(cfg.out_aamsafp);
   fclose(cfg.out_bmkfp);
+  fclose(cfg.out_posfp);
   fclose(cfg.possummfp);
   fclose(cfg.ppossummfp);
   if(cfg.negsummfp != NULL) fclose(cfg.negsummfp);
@@ -1262,7 +1283,7 @@ add_decoy_ORFs_to_positive_sequence_list(struct cfg_s *cfg,
     {
       /* randomly select an MSA name */
       decoy_msa_index = esl_rnd_Roll(cfg->r, num_decoy_msa_names); /* index into array of names */
-      printf("framemark-create: Name of decoy MSA to retrieve is %s at index %d\n", decoy_msa_names[decoy_msa_index],decoy_msa_index); 
+      //printf("framemark-create: Name of decoy MSA to retrieve is %s at index %d\n", decoy_msa_names[decoy_msa_index],decoy_msa_index); 
       status = esl_msafile_PositionByKey(decoymsafp, decoy_msa_names[decoy_msa_index]);
       if (status == eslENOTFOUND) 
              esl_fatal("MSA %s not found in SSI index for file %s\n", 
@@ -1284,7 +1305,7 @@ add_decoy_ORFs_to_positive_sequence_list(struct cfg_s *cfg,
 
       /* Randomly select an MSA sequence */
       seq_num = esl_rnd_Roll(cfg->r, decoymsa->nseq); /*  0..decoymsa->nseq -1 */
-      printf("framemark-create: Decoy sequence to retrieve is at index %d out of %d sequences\n", seq_num, decoymsa->nseq); 
+      //printf("framemark-create: Decoy sequence to retrieve is at index %d out of %d sequences\n", seq_num, decoymsa->nseq); 
 
       if ((status = esl_sq_FetchFromMSA(decoymsa, seq_num, &decoy_seq)) != eslOK)
           esl_fatal("Could not fetch sequence number %d from MSA.");
@@ -1305,7 +1326,7 @@ add_decoy_ORFs_to_positive_sequence_list(struct cfg_s *cfg,
       char dna_codon[4] = {0}; /* initialize all array elements to zero */
 
       ESL_ALLOC(text_dna_decoy_seq, sizeof(char) * (decoy_seq->n*3+1));
-      printf("allocated %d bytes for decoy ORF text", decoy_seq->n*3+1);
+      //printf("allocated %d bytes for decoy ORF text", decoy_seq->n*3+1);
       text_dna_decoy_seq[0] = '\0';
       esl_sq_Textize(decoy_seq);
 
@@ -1316,7 +1337,7 @@ add_decoy_ORFs_to_positive_sequence_list(struct cfg_s *cfg,
       }
 
       text_dna_decoy_seq_len = strlen(text_dna_decoy_seq);
-      printf("decoy DNA seq is %s and length is %d\n", text_dna_decoy_seq, text_dna_decoy_seq_len); 
+      //printf("decoy DNA seq is %s and length is %d\n", text_dna_decoy_seq, text_dna_decoy_seq_len); 
       if ((status = esl_abc_CreateDsq(decoy_dna_alphabet, text_dna_decoy_seq, &decoy_dna_dsq)) != eslOK)
           esl_fatal("Failed to create digital sequence component for DNA decoy sequence");
       decoy_dna_seq = esl_sq_CreateDigitalFrom(decoy_dna_alphabet, "shuffleddecoy",
@@ -2169,7 +2190,7 @@ synthesize_negatives_and_embed_positives(ESL_GETOPTS *go, struct cfg_s *cfg, ESL
    * sequences
    */       
   if (decoymsafp != NULL) {
-      
+          
     int oldnpos = npos;
     add_decoy_ORFs_to_positive_sequence_list(cfg, 
                            decoymsafp, 
@@ -2181,6 +2202,7 @@ synthesize_negatives_and_embed_positives(ESL_GETOPTS *go, struct cfg_s *cfg, ESL
                            &npos);   
     if (npos != oldnpos + num_decoy_ORFs) esl_fatal("Could not add all of the shuffled ORFs to \
                   the sequences array. Wrong number of seq in positives array! Number is :%d", npos);
+    printf("Completed decoys\n");
   }
 
 
@@ -2204,6 +2226,8 @@ synthesize_negatives_and_embed_positives(ESL_GETOPTS *go, struct cfg_s *cfg, ESL
   for (j = 0; j < npos; j++) {
     /* pick a test sequence to embed within */
     i  = esl_rnd_Roll(cfg->r, cfg->nneg); /* i = 0..cfg->nneg-1 */ 
+     
+   printf("embedding sequence %d of %d in neg seq %d\n", j, npos, i);
     if(negseqs_n[i] == cur_alloc[i]) { 
       cur_alloc[i] += alloc_chunk;
       ESL_RALLOC(negseqs_p[i], ptr, sizeof(int) * (cur_alloc[i])); 
@@ -2232,7 +2256,7 @@ synthesize_negatives_and_embed_positives(ESL_GETOPTS *go, struct cfg_s *cfg, ESL
     negseqs_n[i]++;
     negseqs_poslen[i] += posseqs[j]->n; 
   }
-
+  printf("Done embedding\n"); 
   /* At this point, for each negative sequence, we now know which
    * positives we'll embed within it as well as where they'll be
    * embedded. Next, we generate the negative sequence and a benchmark
@@ -2244,6 +2268,7 @@ synthesize_negatives_and_embed_positives(ESL_GETOPTS *go, struct cfg_s *cfg, ESL
   bmksq = esl_sq_CreateDigital(cfg->abc_dna);
   negsq = esl_sq_CreateDigital(cfg->abc_dna);
   for (i = 0; i < cfg->nneg; i++) {
+    printf("creating neg seq %d of %d\n", i+1, cfg->nneg); 
     /* Allocate and initialize the benchmark sequence */
     esl_sq_GrowTo(bmksq, cfg->negL+negseqs_poslen[i]);
     bmksq->n = cfg->negL + negseqs_poslen[i];
@@ -2264,24 +2289,14 @@ synthesize_negatives_and_embed_positives(ESL_GETOPTS *go, struct cfg_s *cfg, ESL
     esl_sq_GrowTo(negsq, cfg->negL); 
     negsq->dsq[0] = negsq->dsq[cfg->negL+1] = eslDSQ_SENTINEL;
     negsq->n = 0;
-    while(negsq->n < cfg->negL) { 
-      if(esl_opt_GetBoolean(go, "-S") || esl_opt_GetBoolean(go, "--iid")) { /* shuffle part of the seqdb */
-        chunkL = (negsq->n + cfg->negchunkL <= cfg->negL) ? cfg->negchunkL : cfg->negL - negsq->n;
-        if(cfg->negsummfp != NULL) { 
-          /* print out sequence name, start/end posn in newly constructed negative seq, set_random_segment() will print the rest */
-          fprintf(cfg->negsummfp, "%-10s %10" PRId64 " %10" PRId64 " ", bmksq->name, negsq->n+1, negsq->n + chunkL); 
-        }
-        set_random_segment(go, cfg, cfg->negsummfp, negsq->dsq + negsq->n + 1, chunkL);
-        negsq->n += chunkL;
-      }
-      else { /* -S not enabled, generate part of the sequence from the HMM */
+    while(negsq->n < cfg->negL) {
+       //printf("n %d  L %d\n", negsq->n, cfg->negL);
         esl_hmm_Emit(cfg->r, cfg->hmm, &tmpdsq, NULL, &chunkL);
         if((negsq->n + chunkL) > cfg->negL) chunkL = cfg->negL - negsq->n;
           memcpy(negsq->dsq + negsq->n + 1, tmpdsq+1, sizeof(ESL_DSQ) * chunkL);
         free(tmpdsq);
-        /* printf("negsq %2d %10" PRId64 "\n", i, negsq->n); */
+        //printf("negsq %2d %10" PRId64 "\n", i, negsq->n); 
         negsq->n += chunkL;
-      }
     }
     /* no need to name negsq, we won't output it */
      
