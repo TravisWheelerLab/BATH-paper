@@ -50,13 +50,14 @@ Steps to run a transmark benchmark
 2. Build a transmark benchmark (see above)
 3. Run prepare_queries_and_targets.sh to create all the necessary file formats
 ```
-bash prepare_queries_and_targets.sh <benchmark name> <benchmark directory> <blast directory> <last directory> <hmmer directory> <bath directory> <split number>
+bash prepare_queries_and_targets.sh <benchmark name> <benchmark directory> <blast directory> <last directory> <hmmer directory> <bath directory> <split number> <cpus available>
 ```
 The /<split number\> number is the number of separate files you want to split your queries into for parallelizing the run process
+The /<cpus available/> is what it sounds like - the number of CPUs available for paralyzing on your system. 
 
 For example:
 ```
-bash prepare_queries_and_targets.sh  tanskmark_with_no_fs ~/git/BATH-paper/transmark/ ~/ncbi-blast-2.14.1+/bin/ ~/last/bin/ ~/hmmer/src/ ~/BATH/src 100
+bash prepare_queries_and_targets.sh  tanskmark_with_no_fs ~/git/BATH-paper/transmark/ ~/ncbi-blast-2.14.1+/bin/ ~/last/bin/ ~/hmmer/src/ ~/BATH/src 100 16
 ```
 4. 
 
