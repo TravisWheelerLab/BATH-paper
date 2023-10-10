@@ -11,16 +11,18 @@ IMPLDIR  = impl_sse
 
 SRCDIR   = ../src
 
-ESLDIR   = /home/u3/gkrause/git/hmmer/easel
-HMMERDIR = /home/u3/gkrause/git/hmmer
+ESLDIR   = /your/path/hmmer/easel
+HMMERDIR = /your/path/hmmer
 
 ESLINC   = -I${ESLDIR}
 SRCINC   = -I${SRCDIR}
 
 PROGS    = transmark-create\
+           transmark-rocplot
 
 PROGOBJS  =\
 	transmark-create.o\
+        transmark-rocplot.o
 
 # beautification magic stolen from git 
 QUIET_SUBDIR0 = +${MAKE} -C #space separator after -c
