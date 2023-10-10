@@ -1,5 +1,5 @@
-# framemark3-bg.hmm
-# HMM parameter file read by framemark-create.c for
+# transmark3-bg.hmm
+# HMM parameter file read by transmark-create.c for
 # generating an DNA homology search benchmark. 
 # Coppied from Infernal's rmark-create program
 # 

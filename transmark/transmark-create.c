@@ -2,9 +2,9 @@
  * Modified from HMMER's create-profmark.c. 
  * 
  * Usage:
- *   ./framemark-create <basename> <DNA msa file> <AA msa file> <blast path> <easle path> <background hmm file> <frameshift rate>
+ *   ./transmark-create <basename> <DNA msa file> <AA msa file> <blast path> <easle path> <background hmm file> <frameshift rate>
  * For example:
- *   ./framemark-create framemark01 /misc/data0/databases/DNA.msa /misc/data0/databases/AA.msa /misc/data0/databases/protein.msa /ncbi-blast-2.13.0+/bin/ /hmmer/easel/miniapps/ 0.01
+ *   ./transmark-create transmark01 /misc/data0/databases/DNA.msa /misc/data0/databases/AA.msa /misc/data0/databases/protein.msa /ncbi-blast-2.13.0+/bin/ /hmmer/easel/miniapps/ 0.01
  *
  * There are three types of sequences:
  * 1. positives:
@@ -58,7 +58,7 @@
 
 #include "esl_msafile2.h"
 
-static char banner[] = "construct a framemark benchmark profile training/test set";
+static char banner[] = "construct a transmark benchmark profile training/test set";
 static char usage1[]  = "[options] <basename> <DNA msafile> <blast path> <bg hmmfile> <fs rate>";
 
 #define SHUF_OPTS "--mono,--di,--markov0,--markov1"   /* toggle group, seq shuffling options          */
@@ -428,12 +428,12 @@ main(int argc, char **argv)
      * NOTE cfg.L will need to be at least 1000 to hold a complete ORF
      */
     num_decoy_seq_for_neg_seq = 0.05*cfg.negL/1000;
-    printf("framemark-create: Number of decoy sequences to plant per background sequence = %d\n", num_decoy_seq_for_neg_seq);
+    printf("transmark-create: Number of decoy sequences to plant per background sequence = %d\n", num_decoy_seq_for_neg_seq);
     if (num_decoy_seq_for_neg_seq <= 0) esl_fatal("The number of decoy ORFs \
                    to insert is less than 1: %d\n", num_decoy_seq_for_neg_seq);
 
     num_decoy_ORFs = num_decoy_seq_for_neg_seq * cfg.nneg; 
-    printf("framemark-create: Total number of decoy ORFs to plant = %d\n", num_decoy_ORFs);
+    printf("transmark-create: Total number of decoy ORFs to plant = %d\n", num_decoy_ORFs);
                    
     /* initialize ptrs to decoy MSA names */
      for(i=0; i < MAX_DECOY_MSA_NAMES; i++)  
@@ -475,7 +475,7 @@ main(int argc, char **argv)
       num_decoy_msa_names++;             
       esl_msa_Destroy(decoymsa);
     }
-    printf("framemark-create: Found %d alignments in decoy MSA %s\n", num_decoy_msa_names, decoyfile);
+    printf("transmark-create: Found %d alignments in decoy MSA %s\n", num_decoy_msa_names, decoyfile);
   }
    
   /* Open the MSA file */
@@ -532,7 +532,7 @@ main(int argc, char **argv)
     }
     esl_msafile_Close(afp_dna);
 
-    printf("framemark-create: Found %d families in %s\n", num_msas, alifile_dna);
+    printf("transmark-create: Found %d families in %s\n", num_msas, alifile_dna);
 
     //If number of read in families exceeds maximum number of famlies allowed 
     //randomly remove one family at a time until there are no longer too many
@@ -546,7 +546,7 @@ main(int argc, char **argv)
       }
     } 
     
-    printf("framemark-create:Processing %d families from %s\n", num_msas_to_process, alifile_dna);
+    printf("transmark-create:Processing %d families from %s\n", num_msas_to_process, alifile_dna);
 
     // reopen the premade test and train set file to so we can start reading
     // the MSAs and reset the file pointer to the beginning of the file
@@ -863,7 +863,7 @@ main(int argc, char **argv)
     }
     esl_msafile_Close(afp_dna);
   
-  printf("framemark-create: Found %d alignments in %s\n", num_msas_to_process, alifile_dna);
+  printf("transmark-create: Found %d alignments in %s\n", num_msas_to_process, alifile_dna);
 
 
     // reopen the alignment file to so we can start reading the MSAs
@@ -884,7 +884,7 @@ main(int argc, char **argv)
       esl_msa_ConvertDegen2X(origmsa); 
 
       current_msa_number++;
-      printf("\n\nframemark-create: Processing %s MSA to get training and test sets; %d of %d\n", origmsa->name, current_msa_number, num_msas_to_process);
+      printf("\n\ntransmark-create: Processing %s MSA to get training and test sets; %d of %d\n", origmsa->name, current_msa_number, num_msas_to_process);
 
       remove_fragments(&cfg, origmsa, &msa, &nfrags);
 
@@ -1283,7 +1283,7 @@ add_decoy_ORFs_to_positive_sequence_list(struct cfg_s *cfg,
     {
       /* randomly select an MSA name */
       decoy_msa_index = esl_rnd_Roll(cfg->r, num_decoy_msa_names); /* index into array of names */
-      //printf("framemark-create: Name of decoy MSA to retrieve is %s at index %d\n", decoy_msa_names[decoy_msa_index],decoy_msa_index); 
+      //printf("transmark-create: Name of decoy MSA to retrieve is %s at index %d\n", decoy_msa_names[decoy_msa_index],decoy_msa_index); 
       status = esl_msafile_PositionByKey(decoymsafp, decoy_msa_names[decoy_msa_index]);
       if (status == eslENOTFOUND) 
              esl_fatal("MSA %s not found in SSI index for file %s\n", 
@@ -1305,7 +1305,7 @@ add_decoy_ORFs_to_positive_sequence_list(struct cfg_s *cfg,
 
       /* Randomly select an MSA sequence */
       seq_num = esl_rnd_Roll(cfg->r, decoymsa->nseq); /*  0..decoymsa->nseq -1 */
-      //printf("framemark-create: Decoy sequence to retrieve is at index %d out of %d sequences\n", seq_num, decoymsa->nseq); 
+      //printf("transmark-create: Decoy sequence to retrieve is at index %d out of %d sequences\n", seq_num, decoymsa->nseq); 
 
       if ((status = esl_sq_FetchFromMSA(decoymsa, seq_num, &decoy_seq)) != eslOK)
           esl_fatal("Could not fetch sequence number %d from MSA.");
@@ -1559,7 +1559,7 @@ separate_sets(struct cfg_s *cfg, ESL_MSA *msa, int **ret_i_am_train, int **ret_i
   if ((removed_test_sequences_fp = fopen(removed_test_sequences_file, "a")) == NULL)  
       esl_fatal("Failed to open removed test sequences file %s\n", removed_test_sequences_file);  
 
-  printf("framemark-create: Determining if training sequences in MSA %s are greater than some percentage identical to test sequences\n", msa->name);
+  printf("transmark-create: Determining if training sequences in MSA %s are greater than some percentage identical to test sequences\n", msa->name);
 
   //create a temporary file to hold the MSA
   snprintf(train_msa_tmpfile, sizeof(train_msa_tmpfile), "%s", "esltrainmsatmpXXXXXX");
@@ -1679,7 +1679,7 @@ separate_sets(struct cfg_s *cfg, ESL_MSA *msa, int **ret_i_am_train, int **ret_i
 
   //if there are no sequences left in the test set then we are done
   if (esl_vec_ISum(i_am_possibly_test, msa->nseq) == 0) {
-    printf("\nframemark-create: Cannot use MSA %s; no training sequences are different enough from test sequences\n", msa->name);
+    printf("\ntransmark-create: Cannot use MSA %s; no training sequences are different enough from test sequences\n", msa->name);
     esl_vec_ISet(i_am_train, msa->nseq, 0);
     esl_vec_ISet(i_am_test,  msa->nseq, 0);
     free(assignment);
@@ -2273,8 +2273,8 @@ synthesize_negatives_and_embed_positives(ESL_GETOPTS *go, struct cfg_s *cfg, ESL
     esl_sq_GrowTo(bmksq, cfg->negL+negseqs_poslen[i]);
     bmksq->n = cfg->negL + negseqs_poslen[i];
     bmksq->dsq[0] = bmksq->dsq[bmksq->n+1] = eslDSQ_SENTINEL;
-    esl_sq_FormatName(bmksq, "framemark%d", i+1);
-    esl_sq_FormatName(negsq, "framemark%d-nopositives", i+1);
+    esl_sq_FormatName(bmksq, "transmark%d", i+1);
+    esl_sq_FormatName(negsq, "transmark%d-nopositives", i+1);
 
     /* Create the negative sequence of length cfg->negL by either
      * generating sequence from the HMM or by using the input database
@@ -2340,7 +2340,7 @@ synthesize_negatives_and_embed_positives(ESL_GETOPTS *go, struct cfg_s *cfg, ESL
           
       fprintf(tmppossummfp, "%-35s %-10s %-35s %8" PRId64 " %8" PRId64 "\n",
           posseqs[j]->desc, /* description, this has been set earlier as the msa name plus seq idx (e.g. "tRNA/3" for 3rd tRNA in the set)   */
-          bmksq->name,      /* output sequence name   (e.g. framemark10)   */
+          bmksq->name,      /* output sequence name   (e.g. transmark10)   */
           posseqs[j]->name, /* positive sequence name (from input MSA) */
           (posseqs_o[j] == 0) ? (bmk_p - posseqs[j]->n) : bmk_p - 1,   /* start point in bmksq */
           (posseqs_o[j] == 0) ? bmk_p - 1 : (bmk_p - posseqs[j]->n));  /* end   point in bmksq */

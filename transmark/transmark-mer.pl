@@ -3,8 +3,8 @@
 #use strict;
 use warnings;
 
-# Given a positive file (.pos), an output file from framemark-time.pl and
-# an output (.out) file of an framemark benchmark, determine the
+# Given a positive file (.pos), an output file from transmark-time.pl and
+# an output (.out) file of an transmark benchmark, determine the
 # family-specific and summary MER (minimum error rates). The output
 # file must be sorted properly by score (E-value or bit score), with
 # better scores preceding worse scores.  
@@ -16,7 +16,7 @@ use warnings;
 # -T <x> : set minimum bit score to consider as <x>
 #
 #use strict;
-my $usage = "Usage:  sort -g <outfile> | perl framemark-mer.pl <posfile> <timefile>\n";
+my $usage = "Usage:  sort -g <outfile> | perl transmark-mer.pl <posfile> <timefile>\n";
 
 # for fileparse below for shuffled orf decoys
 use File::Basename;

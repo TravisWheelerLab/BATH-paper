@@ -17,10 +17,10 @@ HMMERDIR = /home/u3/gkrause/git/hmmer
 ESLINC   = -I${ESLDIR}
 SRCINC   = -I${SRCDIR}
 
-PROGS    = framemark-create\
+PROGS    = transmark-create\
 
 PROGOBJS  =\
-	framemark-create.o\
+	transmark-create.o\
 
 # beautification magic stolen from git 
 QUIET_SUBDIR0 = +${MAKE} -C #space separator after -c
@@ -52,7 +52,7 @@ clean:
 	-rm -f *.gcno
 
 ################################################################
-# framemark - Creates and runs DNA sequence benchmark with a 
+# transmark - Creates and runs DNA sequence benchmark with a 
 # spefied rate of frameshfts for translated search using HMMER
 # Version 1.0.0; May 2023
 ################################################################

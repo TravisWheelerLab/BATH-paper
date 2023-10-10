@@ -1,9 +1,9 @@
 #! /usr/bin/perl 
 
-# Run a framemark benchmark with frahmmer.
+# Run a transmark benchmark with bathsearch.
 #
-# Usage:      x-frahmmer <execdir> <scriptdir> <outdir> <outname> <queryfile> <posfile> <fafile> <cpus> <e-max>
-# Example:  /home/user/FraHMMER-paper/framemark/x-frahmmer /home/user/FraHMMER/src /home/user/FraHMMER-paper/framemark  /home/user/framemark-results  framemark-00fs /home/user/framemark-files/framemark-00fs.fhmm /home/user/framemark-files/framemark-00fs.pos /home/user/framemark-files/framemark-00fs.fa 16 100 
+# Usage:      x-bathsearch <execdir> <scriptdir> <outdir> <outname> <queryfile> <posfile> <fafile> <cpus> <e-max>
+# Example:  /home/user/BATH-paper/transmark/x-bathsearch /home/user/BATH/src /home/user/BATH-paper/transmark  /home/user/transmark-results  transmark-00fs /home/user/transmark-files/transmark-00fs.bhmm /home/user/transmark-files/transmark-00fs.pos /home/user/transmark-files/transmark-00fs.fa 16 100 
 #
 use Time::HiRes;
 
@@ -16,12 +16,12 @@ $outfile        = $outname . ".out";
 $tmpoutfile     = $outfile . ".tmp";
 $sorttmpoutfile = $outfile . ".tmp.sort";
 
-$idscript      = "$scriptdir/framemark-idpositives.pl";
-$frahmmer      = "$execdir/frahmmer";
+$idscript      = "$scriptdir/transmark-idpositives.pl";
+$bathsearch    = "$execdir/bathsearch";
 
 if (! -d $execdir)      { die "didn't find executable directory $execdir"; }
 if (! -d $scriptdir)    { die "didn't find script directory $scriptdir"; }
-if (! -x $frahmmer)     { die "didn't find executable $frahmmer"; }
+if (! -x $bathsearh)    { die "didn't find executable $bathsearch"; }
 if (! -e $outdir)       { die "$outdir doesn't exist"; }
 if (! -e $posfile)      { die "$posfile doesn't exist"; }
 if (! -e $idscript)     { die "positive identification script $idscript doesn't exist"; }
@@ -30,8 +30,8 @@ open(TMPOUTFILE,">$outdir/$tmpoutfile") || die "failed to open $outdir/$tmpoutfi
 
 $runtime = -1 * Time::HiRes::time();
 
-#run frahmmer
-$command = "$frahmmer --cpu $cpus -E $emax -o $outdir/$outname.search --fstblout $outdir/$outname.fs --tblout $outdir/$outname.tmp $queryfile $targetfile";
+#run bathsearch
+$command = "$bathsearch --nofs --cpu $cpus -E $emax -o $outdir/$outname.search --fstblout $outdir/$outname.fs --tblout $outdir/$outname.tmp $queryfile $targetfile";
 $status = system("$command");
 if ($status != 0) { die "FAILED: $command"; }
 

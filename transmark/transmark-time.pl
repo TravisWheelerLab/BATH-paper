@@ -9,7 +9,7 @@
 # Output the summed time for all such lines in each file, and 
 # in all files. 
 #
-# Example usage:  ls *.time | perl framemark-time.pl 
+# Example usage:  ls *.time | perl transmark-time.pl 
 #
 $total_seconds = 0;
 %fam_seconds_H = ();

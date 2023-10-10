@@ -10,7 +10,7 @@ my $k;
 my $m;
 my $d;
 
-my $usage = "Usage: cat <outfile> | perl framemark-coverage.pl <posfile> <tool>\n";
+my $usage = "Usage: cat <outfile> | perl transmark-coverage.pl <posfile> <tool>\n";
 
 my $posfile      = shift;
 my $tool         = shift;

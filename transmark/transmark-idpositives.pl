@@ -1,22 +1,22 @@
 #! /usr/bin/perl -w
 #
-# Given a positive file (.pos) and an output file of an framemark benchmark,
+# Given a positive file (.pos) and an output file of an transmark benchmark,
 # first remove all overlapping hits from the file, as defined below.
 # Then given the set of non-overlapping hits, create a positive-annotated
 # output file that lists the non-overlapping hits in the benchmark output file,
 # along with two extra fields indicating if each hit overlaps a positive or not
 # and whether the overlap is on the correct strand.
 #
-# The <framemark outfile> MUST be sorted properly by score (E-value or bit score), with
+# The <transmark outfile> MUST be sorted properly by score (E-value or bit score), with
 # better scores preceding worse scores.
 #
-# Usage:    perl identify-positives.pl <posfile> <sorted framemark output>
-# Example:  ./identify-positives.pl framemark3.pos sorted-cmsearch.out
+# Usage:    perl identify-positives.pl <posfile> <sorted transmark output>
+# Example:  ./identify-positives.pl transmark-00.pos sorted-cmsearch.out
 #
 # SVN $Id$
 #
 use strict;
-my $usage          = "Usage: perl identify-positives <posfile> <framemark outfile>\n";
+my $usage          = "Usage: perl identify-positives <posfile> <transmark outfile>\n";
 
 if(scalar(@ARGV) != 2) {
     print "Incorrect number of command line arguments.\n";

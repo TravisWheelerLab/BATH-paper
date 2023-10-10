@@ -7,8 +7,8 @@
 #SBATCH --cpus-per-task=16
 
 if [ "$#" -ne 7 ]; then
-	echo "useage: prepare_queries_and_targets.sh <basename> <benchmark directory> <blast directory> <last directory> <hmmer directory> <frahmmer directory> <split number>"
-        echo "e.g. prepare_queries_and_targets.sh framemark-00 /home/user/framemark_files /home/user/ncbi-blast-2.13.0+/bin /home/user/last/bin /home/user/hmmer/src /home/user/FraHMMER/src 100"
+	echo "useage: prepare_queries_and_targets.sh <basename> <benchmark directory> <blast directory> <last directory> <hmmer directory> <bathsearch directory> <split number>"
+        echo "e.g. prepare_queries_and_targets.sh transmark-00 /home/user/transmark_files /home/user/ncbi-blast-2.13.0+/bin /home/user/last/bin /home/user/hmmer/src /home/user/BATH/src 100"
 	exit 1;
 fi
 
@@ -18,7 +18,7 @@ echo "benchmark directory " $2
 echo "blast directory " $3
 echo "last directory " $4
 echo "hmmer directory " $5
-echo "frahmmer directory " $6 
+echo "bathsearch directory " $6 
 echo "split number " $7
 
 #cd into benchmark directory
@@ -67,14 +67,20 @@ do
     # build last db file
     $4/lastdb -P16 -q -c queries/tbl$i.AA.fa.db queries/tbl$i.AA.fa
 
-    #  build DNA hmms for nhmmer
+    #build DNA hmms for nhmmer
     $5/hmmbuild --cpu 16 queries/tbl$i.DNA.hmm queries/tbl$i.DNA.msa
 
-    # build Amino Acid hmms for hmmsearht
+    #build frameshift aware hmms for bathsearch
+    $6/bathbuild --cpu 16 queries/tbl$i.AA.bhmm queries/tbl$i.AA.msa
+
+    #build Amino Acid hmms to create consensus sequences
     $5/hmmbuild --cpu 16 queries/tbl$i.AA.hmm queries/tbl$i.AA.msa
 
-    # build frameshift aware hmms for frahmmer
-    $6/frahmmbuild --cpu 16 queries/tbl$i.AA.fhmm queries/tbl$i.AA.msa
+    #emit a consensus sequence for each family
+    $5/hmmemit -o queries/tbl$i.AA.cons.fa -c queries/tbl$i.AA.hmm
+
+    #build a bathsearch hmm from the consensus sequence
+    $6/bathbuild --cpu 16 --unali queries/tbl$i.AA.cons.bhmm queries/tbl$i.AA.cons.fa
 
 done
 

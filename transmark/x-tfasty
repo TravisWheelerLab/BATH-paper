@@ -1,9 +1,9 @@
 #! /usr/bin/perl 
 
-# Run a framemark benchmark with tfasty.
+# Run a transmark benchmark with tfasty.
 #
 # Usage:      x-tfasty <execdir> <scriptdir> <outdir> <outname> <queryfile> <posfile> <fafile> <cpus> <e-max>
-# Example:  /home/user/FraHMMER-paper/framemark/x-tfasty /home/user/fasta36/bin /home/user/FraHMMER-paper/framemark  /home/user/framemark-results  framemark-00fs /home/user/framemark-files/framemark-00fs.seq /home/user/framemark-files/framemark-00fs.pos /home/user/framemark-files/framemark-00fs.fa 16 100
+# Example:  /home/user/FraHMMER-paper/transmark/x-tfasty /home/user/fasta36/bin /home/user/FraHMMER-paper/transmark  /home/user/transmark-results  transmark-00fs /home/user/transmark-files/transmark-00fs.seq /home/user/transmark-files/transmark-00fs.pos /home/user/transmark-files/transmark-00fs.fa 16 100
 #
 
 use Time::HiRes;
@@ -16,7 +16,7 @@ $outfile        = $outname . ".out";
 $tmpoutfile     = $outfile . ".tmp";
 $sorttmpoutfile = $outfile . ".tmp.sort";
 
-$idscript   = "$scriptdir/framemark-idpositives.pl";
+$idscript   = "$scriptdir/transmark-idpositives.pl";
 $tfasty     = "$execdir/tfasty36";
 
 if (! -d $execdir)                                      { die "didn't find executable directory $execdir"; }
