@@ -3,7 +3,7 @@
 # Run a transmark benchmark with tfasty.
 #
 # Usage:      x-tfasty <execdir> <scriptdir> <outdir> <outname> <queryfile> <posfile> <fafile> <cpus> <e-max>
-# Example:  /home/user/FraHMMER-paper/transmark/x-tfasty /home/user/fasta36/bin /home/user/FraHMMER-paper/transmark  /home/user/transmark-results  transmark-00fs /home/user/transmark-files/transmark-00fs.seq /home/user/transmark-files/transmark-00fs.pos /home/user/transmark-files/transmark-00fs.fa 16 100
+# Example:  /home/user/BATH-paper/transmark/x-tfasty /home/user/fasta36/bin /home/user/BATH-paper/transmark  /home/user/transmark-results  transmark-00fs /home/user/transmark-files/transmark-00fs.seq /home/user/transmark-files/transmark-00fs.pos /home/user/transmark-files/transmark-00fs.fa 16 100
 #
 
 use Time::HiRes;
@@ -48,7 +48,7 @@ while (<OUTPUT>)
         $full_query = (split(' ', $query))[0];
         $query = (split('\.', $full_query))[1];
     }
-    elsif(/^framemark\d*\s*\(/) {
+    elsif(/^transmark\d*\s*\(/) {
         @fields   = split(' ', $_, 22);
     	$target      = $fields[0];
     	$last_target = $target; 

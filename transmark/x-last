@@ -3,7 +3,7 @@
 # Run a transmark benchmark with last.
 #
 # Usage:      x-last <execdir> <scriptdir> <outdir> <outname> <queryfile> <posfile> <fafile> <cpus> <e-max>
-# Example:  /home/user/FraHMMER-paper/transmark/x-last /home/user/last/bin /home/user/FraHMMER-paper/transmark  /home/user/transmark-results/last  transmark-00fs /home/user/transmark-files/transmark-00fs.seq /home/user/transmark-files/transmark-00fs.pos /home/user/transmark-files/transmark-00fs.fa 16 100
+# Example:  /home/user/BATH-paper/transmark/x-last /home/user/last/bin /home/user/BATH-paper/transmark  /home/user/transmark-results/last  transmark-00fs /home/user/transmark-files/transmark-00fs.seq /home/user/transmark-files/transmark-00fs.pos /home/user/transmark-files/transmark-00fs.fa 16 100
 #
 
 use Time::HiRes;

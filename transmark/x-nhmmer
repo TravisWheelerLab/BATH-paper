@@ -3,7 +3,7 @@
 # Run a transmark benchmark with nhmmer.
 #
 # Usage:      x-nhmmer <execdir> <scriptdir> <outdir> <outname> <queryfile> <posfile> <fafile> <cpus> <e-max>
-# Example:  /home/user/FraHMMER-paper/transmark/x-nhmmer /home/user/hmmer/src /home/user/FraHMMER-paper/transmark  /home/user/transmark-results  transmark-00fs /home/user/transmark-files/transmark-00fs.DNA.hmm /home/user/transmark-files/transmark-00fs.pos /home/user/transmark-files/transmark-00fs.fa 16 100
+# Example:  /home/user/BATH-paper/transmark/x-nhmmer /home/user/hmmer/src /home/user/BATH-paper/transmark  /home/user/transmark-results  transmark-00fs /home/user/transmark-files/transmark-00fs.DNA.hmm /home/user/transmark-files/transmark-00fs.pos /home/user/transmark-files/transmark-00fs.fa 16 100
 #
 
 use Time::HiRes;
