@@ -22,7 +22,7 @@ This directory DOES NOT include the following:
     4. LAST - https://gitlab.com/mcfrith/last
     5. HMMER - https://github.com/EddyRivasLab/hmmer
   
-Steps to create a transmark benchamrk
+Steps to create a transmark benchmark
 1. Clone the BATH-paper repository
 2. Ensure you have a local copy of the HMMER3 repository - including EASLE - as well as the BLAST software (see above)
 3. Ensure you have a dataset of protein sequences to use in the construction of decoys (see above)
@@ -31,8 +31,32 @@ Steps to create a transmark benchamrk
 6. run make
 7. cd into the seed-files directory and unzip both the train-test.AA.tfile.zip and train-test.DNA.tfile.zip files
 8. Run transmark-create.  To create a benchmark similar to the ones used in the BATH manuscript use the following set of command line arguments:
+```
+./transmark-create --pre -N 10 -L 100000000 -R 10 -E 10 --maxtrain 30 --maxtest 20 --maxfams 1500 -D <decoy file> <benchmark name> <DNA seed file> <AA seed file> <blast path> <easel path> <background hmm file> <frameshift rate>
+```
+The \<DNA seed file\>, \<AA seed file\>, and \<background hmm file\> are all files included in this directory.
+The \<decoy file\>, \<blast path\>, and \<easel path\> are the paths to your local copies of the executables or data sets
+The \<benchmark name\> is whatever you want the base names of the output files to be
+The \<frameshift rate\> is your desired rate of simulated frameshifts in the embedded test sequences of this benchmark
 
+For example:
+```
+./transmark-create --pre -N 10 -L 100000000 -R 10 -E 10 --maxtrain 30 --maxtest 20 --maxfams 1500 -D ~/PFAM/Pfam-A.seed tanskmark_with_no_fs seed-files/train-test.DNA.tfile seed-files/train-test.AA.tfile  ~/ncbi-blast-2.14.1+/bin/ ~/hmmer/easel/  0.0
+```
+To create an over-extension benchmark like the one used in the BATH manuscript (which embeds only the middle 50% of each test sequence) simply add the --over flag. 
 
+Steps to run a transmark benchmark
+1. Ensure you have local copies of all 5 tested software packages (see above)
+2. Build a transmark benchmark (see above)
+3. Run prepare_queries_and_targets.sh to create all the necessary file formats
+```
+bash prepare_queries_and_targets.sh <benchmark name> <benchmark directory> <blast directory> <last directory> <hmmer directory> <bath directory> <split number>
+```
+The /<split number\> number is the number of separate files you want to split your queries into for parallelizing the run process
 
-transmark-create --pre -N -L 100000000 -R 10 -E 10 --maxtrain 30 --maxtest 20 -D <decoy file> <benchmark name> <DNA seed file> <AA seed file> <blast path> <easle path> <background hmm file> <frameshift rate>
+For example:
+```
+bash prepare_queries_and_targets.sh  tanskmark_with_no_fs ~/git/BATH-paper/transmark/ ~/ncbi-blast-2.14.1+/bin/ ~/last/bin/ ~/hmmer/src/ ~/BATH/src 100
+```
+4. 
 
