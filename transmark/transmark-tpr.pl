@@ -6,7 +6,7 @@ my $i;
 my $j;
 my $k;
 
-my $usage = "Usage: perl transmark-coverage.pl <merfile> \n";
+my $usage = "Usage: perl transmark-tpr.pl <merfile> <toolname>\n";
 
 my $merfile = shift;
 my $tool = shift;

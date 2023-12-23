@@ -19,7 +19,8 @@ $sorttmpoutfile = $outfile . ".tmp.sort";
 $idscript   = "$scriptdir/transmark-idpositives.pl";
 $lastal     = "$execdir/lastal";
 
-$trainfile = $posfile;
+$trainfile = $queryfile;
+chop($trainfile);
 chop($trainfile);
 chop($trainfile);
 chop($trainfile);
@@ -42,7 +43,7 @@ open(TMPOUTFILE,">$outdir/$tmpoutfile") || die "failed to open $tmpoutfile";
 $runtime = -1 * Time::HiRes::time();
 
 # run last
-$command = "$lastal -p $trainfile -P$cpus -D$emax -K1 -fTAB $queryfile.db $targetfile  > $outdir/$outname.tmp";
+$command = "$lastal -p $trainfile -P$cpus -D$emax -K1 -fTAB $queryfile $targetfile  > $outdir/$outname.tmp";
 $status = system("$command");
 if ($status != 0) { die "FAILED: $command"; }
 

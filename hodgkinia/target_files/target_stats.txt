@@ -1,0 +1,7 @@
+Format:              FASTA
+Alphabet type:       DNA
+Number of sequences: 231
+Total # residues:    6245631
+Smallest:            692
+Largest:             70504
+Average length:      27037.4

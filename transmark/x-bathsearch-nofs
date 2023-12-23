@@ -21,7 +21,6 @@ $bathsearch    = "$execdir/bathsearch";
 
 if (! -d $execdir)      { die "didn't find executable directory $execdir"; }
 if (! -d $scriptdir)    { die "didn't find script directory $scriptdir"; }
-if (! -x $bathsearh)    { die "didn't find executable $bathsearch"; }
 if (! -e $outdir)       { die "$outdir doesn't exist"; }
 if (! -e $posfile)      { die "$posfile doesn't exist"; }
 if (! -e $idscript)     { die "positive identification script $idscript doesn't exist"; }

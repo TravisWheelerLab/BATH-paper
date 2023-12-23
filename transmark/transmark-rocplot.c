@@ -396,8 +396,9 @@ parse_results_transmark(char *resfile, int **pni, ESL_KEYHASH *qkh, ESL_KEYHASH 
   char            *match  = NULL;
   char            *query  = NULL;
   char            *strand = NULL;
+  char            *eol    = NULL;
   int              toklen;
-  int              qlen, mlen, slen;
+  int              qlen, mlen, slen, elen;
   struct result_s *rp     = NULL;
   int              ralloc = 0;
   int              nr     = 0;
@@ -438,9 +439,16 @@ parse_results_transmark(char *resfile, int **pni, ESL_KEYHASH *qkh, ESL_KEYHASH 
       if (esl_fileparser_GetTokenOnLine(efp, &tok,    &toklen) != eslOK) esl_fatal("failed to parse line %d of %s", efp->linenumber, resfile); /* target to ignored */
       if (esl_fileparser_GetTokenOnLine(efp, &tok,    &toklen) != eslOK) esl_fatal("failed to parse line %d of %s", efp->linenumber, resfile); /* target name (e.g. transmark3-2) is ignored */
       if (esl_fileparser_GetTokenOnLine(efp, &query,  &qlen)   != eslOK) esl_fatal("failed to parse line %d of %s", efp->linenumber, resfile); /* query name; will be converted to an index */
-      if (esl_fileparser_GetTokenOnLine(efp, &match,  &mlen)   != eslOK) esl_fatal("failed to parse line %d of %s", efp->linenumber, resfile); /* match name; will be converted to an index */
+      if (esl_fileparser_GetTokenOnLine(efp, &match,  &mlen)   != eslOK) esl_fatal("failed to parse line %d of %s", efp->linenumber, resfile); /* match name; will be converted to an index */  
       if (esl_fileparser_GetTokenOnLine(efp, &strand, &slen)   != eslOK) esl_fatal("failed to parse line %d of %s", efp->linenumber, resfile); /* strand; will be used to determine pos/neg */
-    
+      while(esl_fileparser_GetTokenOnLine(efp, &eol, &elen)    != eslEOL) 
+        {
+          match = strand;
+          strand = eol;
+          mlen = slen;
+          slen = elen; 
+        }  
+
       if (esl_keyhash_Lookup(qkh, query, qlen, &(rp[nr].qidx)) != eslOK) esl_fatal("failed to find query model %s in hash", query);  /* query index */
       rp[nr].class = classify_pair_by_names_and_strand(query, match, strand);
       if (rp[nr].class == -1)		/* negatives: increment nneg and offset the index by npos */

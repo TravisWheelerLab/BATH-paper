@@ -17,27 +17,31 @@ set -x
 
 
 if [ $# -lt 5 ]; then
-    echo "ERROR: Your command line contains less than five arguments ($scriptdir, $posfile, $resultdir, $basename, $toolname),"
+    echo "ERROR: Your command line contains less than five arguments ($scriptdir, $inbase, $resultdir, $outbase, $toolname),"
     exit 1
 fi
 
 sort_option='-g'
 
-echo "scriptdir", $1
-echo "posfile", $2
-echo "resultdir", $3
-echo "basename", $4
-echo "toolname", $5
+echo "script directory", $1
+echo "input basename", $2
+echo "result directory", $3
+echo "output basename ", $4
+echo "tool name", $5
 
 # get running time
 ls $3/*.time   | perl $1/transmark-time.pl > $3/$4.time
 
 # get MER
-cat $3/*out | sort ${sort_option} | perl $1/transmark-mer.pl $2 $3/$4.time >  $3/$4.mer
+cat $3/*out | sort ${sort_option} | perl $1/transmark-mer.pl $2.pos $3/$4.time >  $3/$4.mer
 
 # get coverage
-cat $3/*out | sort ${sort_option} | perl $1/transmark-coverage.pl $2 $5 > $3/$4.cover
+cat $3/*out | sort ${sort_option} | perl $1/transmark-coverage.pl $2.pos $5 > $3/$4.cover
 
 #get tpr
 perl $1/transmark-tpr.pl $3/$4.mer $5 > $3/$4.tpr
 
+#get roc
+echo "# $5" > $3/$4.xy
+cat $3/*.out | sort -g | $1/transmark-rocplot $2 - >> $3/$4.xy
+#perl $1/transmark-roc.pl $3/$4.mer $5 > $3/$4.roc 
