@@ -58,6 +58,7 @@ For example:
 ```
 bash prepare_queries_and_targets.sh  tanskmark00 ~/BATH-paper/transmark/ ~/ncbi-blast-2.14.1+/bin/ ~/last/bin/ ~/MMseqs2/build/src ~/hmmer/src/ ~/BATH/src ~/diamond 16
 ```
+The /<cpus available/> is what it sounds like - the number of CPUs available for paralyzing on your system. 
 
 4. You should now have all the files you need to run the tools on your benchmark. To do this you will run each of the files starting with "x-" followed by the toolname. Each of these files takes the same set of command line argumants (with the exception of x-last):
 ```

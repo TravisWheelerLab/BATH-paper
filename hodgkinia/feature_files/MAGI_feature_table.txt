@@ -7,7 +7,7 @@ gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant1	CM00856
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant1	CM008567.1	10775	11233	+	PIM95162.1			Riboflavin synthase alpha chain	ribC		MAGCAS_3	459	152	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant1	CM008567.1	11712	12890	+					metC		MAGCAS_4	1179		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant1	CM008567.1	11712	12890	+	PIM95163.1			cystathionine beta-lyase	metC		MAGCAS_4	1179	392	
-gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant1	CM008567.1	15612	15845	-							MAGCAS_5	234		
+gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant1	CM008567.1	15612	15845	-					xxxF		MAGCAS_5	234		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant1	CM008567.1	15612	15845	-	PIM95164.1			hypothetical protein			MAGCAS_5	234	77	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant1	CM008567.1	20833	22053	+					rpoD		MAGCAS_6	1221		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant1	CM008567.1	20833	22053	+	PIM95165.1			RNA polymerase sigma factor rpoD	rpoD		MAGCAS_6	1221	406	
@@ -121,7 +121,7 @@ gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant5	CM00859
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant5	CM008591.1	24594	25700	-	PIM95120.1			Histidinol-phosphate aminotransferase	hisC		MAGCAS_60	1107	368	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant5	CM008591.1	30541	30858	-					hisI		MAGCAS_61	318		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant5	CM008591.1	30541	30858	-	PIM95121.1			Phosphoribosyl-AMP cyclohydrolase	hisI		MAGCAS_61	318	105	
-gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant5	CM008591.1	32751	33809	+							MAGCAS_62	1059		
+gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant5	CM008591.1	32751	33809	+					xxxB		MAGCAS_62	1059		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant5	CM008591.1	32751	33809	+	PIM95122.1			hypothetical protein			MAGCAS_62	1059	352	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant5	CM008591.1	40201	43962	-					rpoB		MAGCAS_63	3762		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant5	CM008591.1	40201	43962	-	PIM95123.1			DNA-directed RNA polymerase subunit beta	rpoB		MAGCAS_63	3762	1253	
@@ -263,7 +263,7 @@ gene	rRNA	GCA_002762255.1	Primary Assembly	chromosome	variant19	CM008577.1	1241	
 rRNA		GCA_002762255.1	Primary Assembly	chromosome	variant19	CM008577.1	1241	2794	+				16S ribosomal RNA			MAGCAS_131	1554		
 gene	rRNA	GCA_002762255.1	Primary Assembly	chromosome	variant19	CM008577.1	2900	5605	+							MAGCAS_132	2706		
 rRNA		GCA_002762255.1	Primary Assembly	chromosome	variant19	CM008577.1	2900	5605	+				23S ribosomal RNA			MAGCAS_132	2706		
-gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant19	CM008577.1	6032	7048	+							MAGCAS_133	1017		
+gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant19	CM008577.1	6032	7048	+					xxxA		MAGCAS_133	1017		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant19	CM008577.1	6032	7048	+	PIM95020.1			hypothetical protein			MAGCAS_133	1017	338	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant19	CM008577.1	8346	9047	+					tsf		MAGCAS_134	702		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant19	CM008577.1	8346	9047	+	PIM95021.1			elongation factor EF-Ts	tsf		MAGCAS_134	702	233	
@@ -335,7 +335,7 @@ gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant27	CM0085
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant27	CM008586.1	26927	27496	-	PIM94983.1			ribosome recycling factor	frr		MAGCAS_167	570	189	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant28	CM008587.1	13505	14821	-					sufB		MAGCAS_168	1317		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant28	CM008587.1	13505	14821	-	PIM94976.1			FeS cluster assembly protein sufB	sufB		MAGCAS_168	1317	438	
-gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant28	CM008587.1	19467	20183	-							MAGCAS_169	717		
+gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant28	CM008587.1	19467	20183	-					xxxD		MAGCAS_169	717		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant28	CM008587.1	19467	20183	-	PIM94977.1			hypothetical protein			MAGCAS_169	717	238	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	chromosome	variant29	CM008588.1	1025	2512	-					infB		MAGCAS_170	1488		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	chromosome	variant29	CM008588.1	1025	2512	-	PIM94974.1			Translation initiation factor IF-2	infB		MAGCAS_170	1488	495	
@@ -355,7 +355,7 @@ gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL0100
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000033.1	859	1074	+	PIM94966.1			Translation initiation factor IF-1	infA		MAGCAS_177	216	71	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000033.1	4635	5042	+					ribH		MAGCAS_178	408		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000033.1	4635	5042	+	PIM94967.1			6,7-dimethyl-8-ribityllumazine synthase	ribH		MAGCAS_178	408	135	
-gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000036.1	63	686	+							MAGCAS_179	624		
+gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000036.1	63	686	+					xxxM		MAGCAS_179	624		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000036.1	63	686	+	PIM94964.1			hypothetical protein			MAGCAS_179	624	207	
 gene	tRNA	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000036.1	704	774	+					tRNA-Val		MAGCAS_180	71		
 tRNA		GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000036.1	704	774	+				tRNA-Val	tRNA-Val		MAGCAS_180	71		
@@ -411,7 +411,7 @@ gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL0100
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000062.1	21338	22267	+	PIM94891.1			Riboflavin biosynthesis protein RibD	ribD		MAGCAS_215	930	309	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000062.1	34029	34736	-					cobA		MAGCAS_216	708		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000062.1	34029	34736	-	PIM94892.1			putative uroporphyrin-III c-methyltransferase	cobA		MAGCAS_216	708	235	
-gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000062.1	35564	36076	-							MAGCAS_217	513		
+gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000062.1	35564	36076	-					xxxC		MAGCAS_217	513		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000062.1	35564	36076	-	PIM94893.1			hypothetical protein			MAGCAS_217	513	170	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000062.1	42015	42371	-					infC		MAGCAS_218	357		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000062.1	42015	42371	-	PIM94894.1			Translation initiation factor IF-3	infC		MAGCAS_218	357	118	
@@ -463,7 +463,7 @@ gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL0100
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000076.1	24779	25429	+	PIM94861.1			Hydrogenobyrinate a,c-diamide synthase	cobB2		MAGCAS_249	651	216	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000076.1	33117	33932	-					cobJ		MAGCAS_250	816		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000076.1	33117	33932	-	PIM94862.1			precorrin-3B C17-methyltransferase	cobJ		MAGCAS_250	816	271	
-gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000076.1	33937	34449	-							MAGCAS_251	513		
+gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000076.1	33937	34449	-					xxxC		MAGCAS_251	513		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000076.1	33937	34449	-	PIM94863.1			hypothetical protein			MAGCAS_251	513	170	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000076.1	41063	45121	-					rpoC		MAGCAS_252	4059		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000076.1	41063	45121	-	PIM94864.1			DNA-directed RNA polymerase subunit beta'	rpoC		MAGCAS_252	4059	1352	
@@ -483,7 +483,7 @@ gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL0100
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000063.1	1280	3193	-	PIM94885.1			Heat shock protein 70	dnaK		MAGCAS_228	1914	637	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000067.1	188	496	-					rplU		MAGCAS_229	309		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000067.1	188	496	-	PIM94882.1			50S ribosomal protein L21	rplU		MAGCAS_229	309	102	
-gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000070.1	187	996	-							MAGCAS_231	810		
+gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000070.1	187	996	-					xxxK		MAGCAS_231	810		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000070.1	187	996	-	PIM94878.1			hypothetical protein			MAGCAS_231	810	269	
 gene	protein_coding	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000070.1	1122	2624	-					mnmG		MAGCAS_232	1503		
 CDS	with_protein	GCA_002762255.1	Primary Assembly	unplaced scaffold		NXGL01000070.1	1122	2624	-	PIM94879.1			tRNA uridine 5-carboxymethylaminomethyl modification enzyme MnmG	mnmG		MAGCAS_232	1503	500	
@@ -614,7 +614,7 @@ gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant1	CM00868
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant1	CM008689.1	2786	3757	-	PIM95670.1			Tryptophan--tRNA ligase	trpS		magneo_1	972	323	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant1	CM008689.1	5617	6363	+					glyQ		magneo_2	747		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant1	CM008689.1	5617	6363	+	PIM95671.1			Glycine--tRNA ligase alpha subunit	glyQ		magneo_2	747	248	
-gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant1	CM008689.1	14052	14279	+							magneo_3	228		
+gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant1	CM008689.1	14052	14279	+					xxxF		magneo_3	228		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant1	CM008689.1	14052	14279	+	PIM95672.1			hypothetical protein			magneo_3	228	75	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant1	CM008689.1	21299	22729	+					infB		magneo_4	1431		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant1	CM008689.1	21299	22729	+	PIM95673.1			Translation initiation factor IF-2	infB		magneo_4	1431	476	
@@ -800,7 +800,7 @@ gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant21	CM0087
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant21	CM008702.1	2924	3679	-	PIM95515.1			Cobalt-precorrin-4 C(11)-methyltransferase	cobM		magneo_94	756	251	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant21	CM008702.1	10897	12327	-					infB		magneo_95	1431		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant21	CM008702.1	10897	12327	-	PIM95516.1			Translation initiation factor IF-2	infB		magneo_95	1431	476	
-gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant21	CM008702.1	19345	19572	-							magneo_96	228		
+gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant21	CM008702.1	19345	19572	-					xxxF		magneo_96	228		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant21	CM008702.1	19345	19572	-	PIM95517.1			hypothetical protein			magneo_96	228	75	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant21	CM008702.1	27261	28007	-					glyQ		magneo_97	747		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant21	CM008702.1	27261	28007	-	PIM95518.1			Glycine--tRNA ligase alpha subunit	glyQ		magneo_97	747	248	
@@ -874,7 +874,7 @@ gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant25	CM0087
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant25	CM008706.1	24916	28974	+	PIM95485.1			DNA-directed RNA polymerase subunit beta'	rpoC		magneo_131	4059	1352	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant25	CM008706.1	29268	29645	+					infC		magneo_132	378		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant25	CM008706.1	29268	29645	+	PIM95486.1			Translation initiation factor IF-3	infC		magneo_132	378	125	
-gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant25	CM008706.1	35571	36083	+							magneo_133	513		
+gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant25	CM008706.1	35571	36083	+					xxxC		magneo_133	513		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant25	CM008706.1	35571	36083	+	PIM95487.1			hypothetical protein			magneo_133	513	170	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant25	CM008706.1	41393	41950	+					dnaQ		magneo_134	558		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant25	CM008706.1	41393	41950	+	PIM95488.1			DNA polymerase III subunit epsilon	dnaQ		magneo_134	558	185	
@@ -936,7 +936,7 @@ gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant29	CM0087
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant29	CM008710.1	22198	22581	-	PIM95458.1			30S ribosomal protein S12	rpsL		magneo_162	384	127	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant30	CM008712.1	1382	2122	-					etfB		magneo_164	741		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant30	CM008712.1	1382	2122	-	PIM95443.1			Electron transfer flavoprotein small subunit	etfB		magneo_164	741	246	
-gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant30	CM008712.1	10119	10742	+							magneo_165	624		
+gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant30	CM008712.1	10119	10742	+					xxxM		magneo_165	624		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant30	CM008712.1	10119	10742	+	PIM95444.1			hypothetical protein			magneo_165	624	207	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant30	CM008712.1	11900	12682	+					ctaC		magneo_166	783		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant30	CM008712.1	11900	12682	+	PIM95445.1			cytochrome c oxidase subunit 2	ctaC		magneo_166	783	260	
@@ -966,11 +966,11 @@ gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant33	CM0087
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant33	CM008715.1	6153	7082	-	PIM95432.1			Riboflavin biosynthesis protein RibD	ribD		magneo_178	930	309	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant33	CM008715.1	15856	17304	-					cobQ		magneo_179	1449		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant33	CM008715.1	15856	17304	-	PIM95433.1			Cobyric acid synthase	cobQ		magneo_179	1449	482	
-gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant33	CM008715.1	18724	19740	-							magneo_180	1017		
+gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant33	CM008715.1	18724	19740	-					xxxA		magneo_180	1017		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant33	CM008715.1	18724	19740	-	PIM95434.1			hypothetical protein			magneo_180	1017	338	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant34	CM008716.1	2497	5691	+					metH		magneo_181	3195		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant34	CM008716.1	2497	5691	+	PIM95427.1			Methionine synthase	metH		magneo_181	3195	1064	
-gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant34	CM008716.1	7620	8336	+							magneo_182	717		
+gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant34	CM008716.1	7620	8336	+					xxxD		magneo_182	717		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant34	CM008716.1	7620	8336	+	PIM95428.1			hypothetical protein			magneo_182	717	238	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant34	CM008716.1	12987	14267	+					sufB		magneo_183	1281		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant34	CM008716.1	12987	14267	+	PIM95429.1			FeS cluster assembly protein sufB	sufB		magneo_183	1281	426	
@@ -1012,7 +1012,7 @@ gene	rRNA	GCA_002774945.1	Primary Assembly	chromosome	variant39	CM008721.1	525	3
 rRNA		GCA_002774945.1	Primary Assembly	chromosome	variant39	CM008721.1	525	3108	-				23S ribosomal RNA			magneo_201	2584		
 gene	rRNA	GCA_002774945.1	Primary Assembly	chromosome	variant39	CM008721.1	3577	5130	-							magneo_202	1554		
 rRNA		GCA_002774945.1	Primary Assembly	chromosome	variant39	CM008721.1	3577	5130	-				16S ribosomal RNA			magneo_202	1554		
-gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant40	CM008723.1	348	1274	-							magneo_203	927		
+gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant40	CM008723.1	348	1274	-					xxxK		magneo_203	927		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant40	CM008723.1	348	1274	-	PIM95414.1			hypothetical protein			magneo_203	927	308	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	chromosome	variant40	CM008723.1	1284	2786	-					mnmG		magneo_204	1503		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	chromosome	variant40	CM008723.1	1284	2786	-	PIM95415.1			tRNA uridine 5-carboxymethylaminomethyl modification enzyme MnmG	mnmG		magneo_204	1503	500	
@@ -1206,7 +1206,7 @@ gene	protein_coding	GCA_002774945.1	Primary Assembly	unplaced scaffold		NXGM0100
 CDS	with_protein	GCA_002774945.1	Primary Assembly	unplaced scaffold		NXGM01000153.1	3114	3893	+	PIM94912.1			Sirohydrochlorin cobaltochelatase	cbiX		magneo_300	780	259	
 gene	tRNA	GCA_002774945.1	Primary Assembly	unplaced scaffold		NXGM01000154.1	1324	1396	-					tRNA-His		magneo_301	73		
 tRNA		GCA_002774945.1	Primary Assembly	unplaced scaffold		NXGM01000154.1	1324	1396	-				tRNA-His	tRNA-His		magneo_301	73		
-gene	protein_coding	GCA_002774945.1	Primary Assembly	unplaced scaffold		NXGM01000154.1	1416	2153	-							magneo_302	738		
+gene	protein_coding	GCA_002774945.1	Primary Assembly	unplaced scaffold		NXGM01000154.1	1416	2153	-					xxxM		magneo_302	738		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	unplaced scaffold		NXGM01000154.1	1416	2153	-	PIM94911.1			hypothetical protein			magneo_302	738	245	
 gene	protein_coding	GCA_002774945.1	Primary Assembly	unplaced scaffold		NXGM01000156.1	2081	2437	-					rpsK		magneo_303	357		
 CDS	with_protein	GCA_002774945.1	Primary Assembly	unplaced scaffold		NXGM01000156.1	2081	2437	-	PIM94886.1			30S ribosomal protein S11	rpsK		magneo_303	357	118	
@@ -1337,7 +1337,7 @@ gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant2	CM00880
 CDS	with_protein	GCA_002774915.1	Primary Assembly	chromosome	variant2	CM008807.1	22066	22740	-	PIM96281.1			FeS assembly ATPase SufC	sufC		magsdc_31	675	224	
 gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant2	CM008807.1	26680	27900	-					rpoD		magsdc_32	1221		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	chromosome	variant2	CM008807.1	26680	27900	-	PIM96282.1			RNA polymerase sigma factor rpoD	rpoD		magsdc_32	1221	406	
-gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant2	CM008807.1	32954	33172	+							magsdc_33	219		
+gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant2	CM008807.1	32954	33172	+					xxxF		magsdc_33	219		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	chromosome	variant2	CM008807.1	32954	33172	+	PIM96283.1			hypothetical protein			magsdc_33	219	72	
 gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant2	CM008807.1	37573	38025	-					ribC		magsdc_34	453		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	chromosome	variant2	CM008807.1	37573	38025	-	PIM96284.1			Riboflavin synthase alpha chain	ribC		magsdc_34	453	150	
@@ -1525,7 +1525,7 @@ gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant14	CM0088
 CDS	with_protein	GCA_002774915.1	Primary Assembly	chromosome	variant14	CM008801.1	11688	12644	-	PIM96175.1			cobalamin biosynthesis protein	cobD		magsdc_125	957	318	
 gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant15	CM008802.1	1679	2227	-					tsf		magsdc_126	549		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	chromosome	variant15	CM008802.1	1679	2227	-	PIM96170.1			elongation factor EF-Ts	tsf		magsdc_126	549	182	
-gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant15	CM008802.1	4634	5650	-							magsdc_127	1017		
+gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant15	CM008802.1	4634	5650	-					xxxA		magsdc_127	1017		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	chromosome	variant15	CM008802.1	4634	5650	-	PIM96171.1			hypothetical protein			magsdc_127	1017	338	
 gene	rRNA	GCA_002774915.1	Primary Assembly	chromosome	variant15	CM008802.1	6068	8780	-							magsdc_128	2713		
 rRNA		GCA_002774915.1	Primary Assembly	chromosome	variant15	CM008802.1	6068	8780	-				23S ribosomal RNA			magsdc_128	2713		
@@ -1601,7 +1601,7 @@ gene	tRNA	GCA_002774915.1	Primary Assembly	chromosome	variant23	CM008811.1	2372	
 tRNA		GCA_002774915.1	Primary Assembly	chromosome	variant23	CM008811.1	2372	2444	-				tRNA-Cys	tRNA-Cys		magsdc_163	73		
 gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant23	CM008811.1	13311	14555	-					sufB		magsdc_164	1245		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	chromosome	variant23	CM008811.1	13311	14555	-	PIM96134.1			FeS cluster assembly protein sufB	sufB		magsdc_164	1245	414	
-gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant23	CM008811.1	19356	20072	-							magsdc_165	717		
+gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant23	CM008811.1	19356	20072	-					xxxD		magsdc_165	717		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	chromosome	variant23	CM008811.1	19356	20072	-	PIM96135.1			hypothetical protein			magsdc_165	717	238	
 gene	protein_coding	GCA_002774915.1	Primary Assembly	chromosome	variant24	CM008812.1	836	1549	+					cysH		magsdc_166	714		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	chromosome	variant24	CM008812.1	836	1549	+	PIM96127.1			Phosphoadenosine phosphosulfate reductase	cysH		magsdc_166	714	237	
@@ -1737,7 +1737,7 @@ gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ0100
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000076.1	46675	50313	-	PIM95908.1			DNA-directed RNA polymerase subunit beta	rpoB		magsdc_239	3639	1212	
 gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000076.1	50337	51056	-					tilS		magsdc_240	720		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000076.1	50337	51056	-	PIM95909.1			tRNA(Ile)-lysidine synthetase	tilS		magsdc_240	720	239	
-gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000076.1	51457	52266	-							magsdc_241	810		
+gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000076.1	51457	52266	-					xxxK		magsdc_241	810		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000076.1	51457	52266	-	PIM95910.1			hypothetical protein			magsdc_241	810	269	
 gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000076.1	52397	53917	-					mnmG		magsdc_242	1521		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000076.1	52397	53917	-	PIM95911.1			tRNA uridine 5-carboxymethylaminomethyl modification enzyme MnmG	mnmG		magsdc_242	1521	506	
@@ -1767,11 +1767,11 @@ gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ0100
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000074.1	17462	18487	-	PIM95933.1			Cysteine synthase	cysK		magsdc_227	1026	341	
 gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000074.1	18718	19524	-					fpr		magsdc_228	807		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000074.1	18718	19524	-	PIM95934.1			Ferredoxin--NADP reductase	fpr		magsdc_228	807	268	
-gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000078.1	273	1334	+							magsdc_251	1062		
+gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000078.1	273	1334	+					xxxB		magsdc_251	1062		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000078.1	273	1334	+	PIM95872.1			hypothetical protein			magsdc_251	1062	353	
 gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000078.1	1324	3882	-					ileS		magsdc_252	2559		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000078.1	1324	3882	-	PIM95873.1			Isoleucine--tRNA ligase	ileS		magsdc_252	2559	852	
-gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000078.1	7915	8538	+							magsdc_253	624		
+gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000078.1	7915	8538	+					xxxM		magsdc_253	624		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000078.1	7915	8538	+	PIM95874.1			hypothetical protein			magsdc_253	624	207	
 gene	tRNA	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000078.1	8556	8627	+					tRNA-His		magsdc_254	72		
 tRNA		GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000078.1	8556	8627	+				tRNA-His	tRNA-His		magsdc_254	72		
@@ -1811,7 +1811,7 @@ gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ0100
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000094.1	2354	3028	-	PIM95801.1			FeS assembly ATPase SufC	sufC		magsdc_268	675	224	
 gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000094.1	6968	8188	-					rpoD		magsdc_269	1221		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000094.1	6968	8188	-	PIM95802.1			RNA polymerase sigma factor rpoD	rpoD		magsdc_269	1221	406	
-gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000094.1	13242	13460	+							magsdc_270	219		
+gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000094.1	13242	13460	+					xxxF		magsdc_270	219		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000094.1	13242	13460	+	PIM95803.1			hypothetical protein			magsdc_270	219	72	
 gene	protein_coding	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000094.1	17861	18313	-					ribC		magsdc_271	453		
 CDS	with_protein	GCA_002774915.1	Primary Assembly	unplaced scaffold		NXGQ01000094.1	17861	18313	-	PIM95804.1			Riboflavin synthase alpha chain	ribC		magsdc_271	453	150	
@@ -1896,7 +1896,7 @@ gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant1	CM00873
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant1	CM008730.1	34095	35732	-	PIM95403.1			cytochrome c oxidase subunit 1	ctaD		magsep_13	1638	545	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant1	CM008730.1	35722	36504	-					ctaC		magsep_14	783		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant1	CM008730.1	35722	36504	-	PIM95404.1			cytochrome c oxidase subunit 2	ctaC		magsep_14	783	260	
-gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant1	CM008730.1	37664	38287	-							magsep_15	624		
+gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant1	CM008730.1	37664	38287	-					xxxM		magsep_15	624		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant1	CM008730.1	37664	38287	-	PIM95405.1			hypothetical protein			magsep_15	624	207	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant1	CM008730.1	46287	47027	+					etfB		magsep_16	741		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant1	CM008730.1	46287	47027	+	PIM95406.1			Electron transfer flavoprotein small subunit	etfB		magsep_16	741	246	
@@ -1932,7 +1932,7 @@ gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant3	CM00875
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant3	CM008752.1	8910	9881	-	PIM95380.1			Tryptophan--tRNA ligase	trpS		magsep_31	972	323	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant3	CM008752.1	11741	12487	+					glyQ		magsep_32	747		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant3	CM008752.1	11741	12487	+	PIM95381.1			Glycine--tRNA ligase alpha subunit	glyQ		magsep_32	747	248	
-gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant3	CM008752.1	20180	20398	+							magsep_33	219		
+gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant3	CM008752.1	20180	20398	+					xxxF		magsep_33	219		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant3	CM008752.1	20180	20398	+	PIM95382.1			hypothetical protein			magsep_33	219	72	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant3	CM008752.1	27409	28839	+					infB		magsep_34	1431		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant3	CM008752.1	27409	28839	+	PIM95383.1			Translation initiation factor IF-2	infB		magsep_34	1431	476	
@@ -2028,7 +2028,7 @@ gene	tRNA	GCA_002774935.1	Primary Assembly	chromosome	variant7	CM008766.1	3454	3
 tRNA		GCA_002774935.1	Primary Assembly	chromosome	variant7	CM008766.1	3454	3524	-				tRNA-Cys	tRNA-Cys		magsep_79	71		
 gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant7	CM008766.1	3871	5151	-					sufB		magsep_80	1281		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant7	CM008766.1	3871	5151	-	PIM95337.1			FeS cluster assembly protein sufB	sufB		magsep_80	1281	426	
-gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant7	CM008766.1	9802	10518	-							magsep_81	717		
+gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant7	CM008766.1	9802	10518	-					xxxD		magsep_81	717		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant7	CM008766.1	9802	10518	-	PIM95338.1			hypothetical protein			magsep_81	717	238	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant7	CM008766.1	12447	15641	-					metH		magsep_82	3195		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant7	CM008766.1	12447	15641	-	PIM95339.1			Methionine synthase	metH		magsep_82	3195	1064	
@@ -2258,7 +2258,7 @@ gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant32	CM0087
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant32	CM008755.1	6152	7081	-	PIM95204.1			Riboflavin biosynthesis protein RibD	ribD		magsep_194	930	309	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant32	CM008755.1	15859	17307	-					cobQ		magsep_195	1449		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant32	CM008755.1	15859	17307	-	PIM95205.1			Cobyric acid synthase	cobQ		magsep_195	1449	482	
-gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant32	CM008755.1	18727	19743	-							magsep_196	1017		
+gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant32	CM008755.1	18727	19743	-					xxxA		magsep_196	1017		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant32	CM008755.1	18727	19743	-	PIM95206.1			hypothetical protein			magsep_196	1017	338	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant33	CM008756.1	6077	6628	+					fpr		magsep_197	552		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant33	CM008756.1	6077	6628	+	PIM95199.1			Ferredoxin--NADP reductase	fpr		magsep_197	552	183	
@@ -2280,7 +2280,7 @@ gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant35	CM0087
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant35	CM008758.1	4314	4805	-	PIM95194.1			50S ribosomal protein L6	rplF		magsep_205	492	163	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant35	CM008758.1	6032	6205	-					rplX		magsep_206	174		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant35	CM008758.1	6032	6205	-	PIM95195.1			50S ribosomal protein L24	rplX		magsep_206	174	57	
-gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant36	CM008759.1	4139	5197	+							magsep_207	1059		
+gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant36	CM008759.1	4139	5197	+					xxxB		magsep_207	1059		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant36	CM008759.1	4139	5197	+	PIM95190.1			hypothetical protein			magsep_207	1059	352	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	chromosome	variant36	CM008759.1	11010	11183	+					rplX		magsep_208	174		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	chromosome	variant36	CM008759.1	11010	11183	+	PIM95191.1			50S ribosomal protein L24	rplX		magsep_208	174	57	
@@ -2352,7 +2352,7 @@ gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN0100
 CDS	with_protein	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000093.1	6859	7140	-	PIM94928.1			50S ribosomal protein L28	rpmB		magsep_261	282	93	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000093.1	12189	12746	-					dnaQ		magsep_262	558		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000093.1	12189	12746	-	PIM94929.1			DNA polymerase III subunit epsilon	dnaQ		magsep_262	558	185	
-gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000093.1	18057	18569	-							magsep_263	513		
+gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000093.1	18057	18569	-					xxxC		magsep_263	513		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000093.1	18057	18569	-	PIM94930.1			hypothetical protein			magsep_263	513	170	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000093.1	24496	24873	-					infC		magsep_264	378		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000093.1	24496	24873	-	PIM94931.1			Translation initiation factor IF-3	infC		magsep_264	378	125	
@@ -2416,7 +2416,7 @@ gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN0100
 CDS	with_protein	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000090.1	222	1756	+	PIM94943.1			cytochrome c oxidase subunit 1	ctaD		magsep_259	1535	512	partial
 gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000092.1	643	1715	+					sufS		magsep_260	1073		partial
 CDS	with_protein	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000092.1	643	1715	+	PIM94940.1			Cysteine desulfurase	sufS		magsep_260	1073	357	partial
-gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000104.1	6252	6470	-							magsep_284	219		
+gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000104.1	6252	6470	-					xxxF		magsep_284	219		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000104.1	6252	6470	-	PIM94904.1			hypothetical protein			magsep_284	219	72	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000104.1	14163	14909	-					glyQ		magsep_285	747		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000104.1	14163	14909	-	PIM94905.1			Glycine--tRNA ligase alpha subunit	glyQ		magsep_285	747	248	
@@ -2448,7 +2448,7 @@ gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN0100
 CDS	with_protein	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000126.1	3154	3933	+	PIM94846.1			Sirohydrochlorin cobaltochelatase	cbiX		magsep_292	780	259	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000132.1	86	718	-					tilS		magsep_293	633		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000132.1	86	718	-	PIM94840.1			tRNA(Ile)-lysidine synthetase	tilS		magsep_293	633	210	
-gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000132.1	1185	2111	-							magsep_294	927		
+gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000132.1	1185	2111	-					xxxK		magsep_294	927		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000132.1	1185	2111	-	PIM94841.1			hypothetical protein			magsep_294	927	308	
 gene	protein_coding	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000132.1	2121	3623	-					mnmG		magsep_295	1503		
 CDS	with_protein	GCA_002774935.1	Primary Assembly	unplaced scaffold		NXGN01000132.1	2121	3623	-	PIM94842.1			tRNA uridine 5-carboxymethylaminomethyl modification enzyme MnmG	mnmG		magsep_295	1503	500	
@@ -2515,7 +2515,7 @@ gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant1	CM00861
 CDS	with_protein	GCA_002762285.1	Primary Assembly	chromosome	variant1	CM008610.1	49810	50478	-	PIM96955.1			FeS assembly ATPase SufC	sufC		magtcs_13	669	222	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant1	CM008610.1	54409	55629	-					rpoD		magtcs_14	1221		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	chromosome	variant1	CM008610.1	54409	55629	-	PIM96956.1			RNA polymerase sigma factor rpoD	rpoD		magtcs_14	1221	406	
-gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant1	CM008610.1	60618	60851	+							magtcs_15	234		
+gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant1	CM008610.1	60618	60851	+					xxxF		magtcs_15	234		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	chromosome	variant1	CM008610.1	60618	60851	+	PIM96957.1			hypothetical protein			magtcs_15	234	77	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant1	CM008610.1	63573	64751	-					metC		magtcs_16	1179		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	chromosome	variant1	CM008610.1	63573	64751	-	PIM96958.1			cystathionine beta-lyase	metC		magtcs_16	1179	392	
@@ -2615,7 +2615,7 @@ gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant5	CM00863
 CDS	with_protein	GCA_002762285.1	Primary Assembly	chromosome	variant5	CM008631.1	23585	24691	-	PIM96899.1			Histidinol-phosphate aminotransferase	hisC		magtcs_63	1107	368	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant5	CM008631.1	29536	29853	-					hisI		magtcs_64	318		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	chromosome	variant5	CM008631.1	29536	29853	-	PIM96900.1			Phosphoribosyl-AMP cyclohydrolase	hisI		magtcs_64	318	105	
-gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant5	CM008631.1	31750	32808	+							magtcs_65	1059		
+gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant5	CM008631.1	31750	32808	+					xxxB		magtcs_65	1059		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	chromosome	variant5	CM008631.1	31750	32808	+	PIM96901.1			hypothetical protein			magtcs_65	1059	352	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant5	CM008631.1	39200	42961	-					rpoB		magtcs_66	3762		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	chromosome	variant5	CM008631.1	39200	42961	-	PIM96902.1			DNA-directed RNA polymerase subunit beta	rpoB		magtcs_66	3762	1253	
@@ -2803,7 +2803,7 @@ gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant22	CM0086
 CDS	with_protein	GCA_002762285.1	Primary Assembly	chromosome	variant22	CM008624.1	40961	41584	-	PIM96724.1			Precorrin-2 C(20)-methyltransferase	cobI		magtcs_157	624	207	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant23	CM008625.1	13268	14584	-					sufB		magtcs_158	1317		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	chromosome	variant23	CM008625.1	13268	14584	-	PIM96712.1			FeS cluster assembly protein sufB	sufB		magtcs_158	1317	438	
-gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant23	CM008625.1	19228	19944	-							magtcs_159	717		
+gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant23	CM008625.1	19228	19944	-					xxxD		magtcs_159	717		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	chromosome	variant23	CM008625.1	19228	19944	-	PIM96713.1			hypothetical protein			magtcs_159	717	238	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	chromosome	variant24	CM008626.1	1334	2782	+					cobQ		magtcs_160	1449		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	chromosome	variant24	CM008626.1	1334	2782	+	PIM96706.1			Cobyric acid synthase	cobQ		magtcs_160	1449	482	
@@ -2823,7 +2823,7 @@ gene	rRNA	GCA_002762285.1	Primary Assembly	chromosome	variant26	CM008628.1	4748	
 rRNA		GCA_002762285.1	Primary Assembly	chromosome	variant26	CM008628.1	4748	7459	-				23S ribosomal RNA			magtcs_168	2712		
 gene	rRNA	GCA_002762285.1	Primary Assembly	chromosome	variant26	CM008628.1	8036	9587	-							magtcs_167	1552		
 rRNA		GCA_002762285.1	Primary Assembly	chromosome	variant26	CM008628.1	8036	9587	-				16S ribosomal RNA			magtcs_167	1552		
-gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000035.1	30	593	+							magtcs_170	564		
+gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000035.1	30	593	+					xxxD		magtcs_170	564		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000035.1	30	593	+	PIM96685.1			hypothetical protein			magtcs_170	564	187	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000036.1	34	504	+					rpsD		magtcs_171	471		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000036.1	34	504	+	PIM96681.1			30S ribosomal subunit protein S4	rpsD		magtcs_171	471	156	
@@ -2951,7 +2951,7 @@ gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR0100
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000070.1	24632	24976	+	PIM96503.1			30S ribosomal protein S13	rpsM		magtcs_232	345	114	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000070.1	24945	25343	+					rpsK		magtcs_233	399		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000070.1	24945	25343	+	PIM96504.1			30S ribosomal protein S11	rpsK		magtcs_233	399	132	
-gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000071.1	63	686	+							magtcs_234	624		
+gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000071.1	63	686	+					xxxM		magtcs_234	624		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000071.1	63	686	+	PIM96493.1			hypothetical protein			magtcs_234	624	207	
 gene	tRNA	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000071.1	704	774	+					tRNA-Val		magtcs_235	71		
 tRNA		GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000071.1	704	774	+				tRNA-Val	tRNA-Val		magtcs_235	71		
@@ -2975,7 +2975,7 @@ gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR0100
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000107.1	21341	22270	+	PIM96398.1			Riboflavin biosynthesis protein RibD	ribD		magtcs_258	930	309	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000107.1	34031	34738	-					cobA		magtcs_259	708		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000107.1	34031	34738	-	PIM96399.1			putative uroporphyrin-III c-methyltransferase	cobA		magtcs_259	708	235	
-gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000107.1	35566	36078	-							magtcs_260	513		
+gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000107.1	35566	36078	-					xxxC		magtcs_260	513		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000107.1	35566	36078	-	PIM96400.1			hypothetical protein			magtcs_260	513	170	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000107.1	42012	42368	-					infC		magtcs_261	357		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000107.1	42012	42368	-	PIM96401.1			Translation initiation factor IF-3	infC		magtcs_261	357	118	
@@ -3035,7 +3035,7 @@ gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR0100
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000124.1	19699	20628	+	PIM96358.1			Riboflavin biosynthesis protein RibD	ribD		magtcs_281	930	309	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000124.1	24785	25435	+					cobB2		magtcs_282	651		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000124.1	24785	25435	+	PIM96359.1			Hydrogenobyrinate a,c-diamide synthase	cobB2		magtcs_282	651	216	
-gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000124.1	33937	34449	-							magtcs_283	513		
+gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000124.1	33937	34449	-					xxxC		magtcs_283	513		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000124.1	33937	34449	-	PIM96360.1			hypothetical protein			magtcs_283	513	170	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000124.1	41062	45120	-					rpoC		magtcs_284	4059		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000124.1	41062	45120	-	PIM96361.1			DNA-directed RNA polymerase subunit beta'	rpoC		magtcs_284	4059	1352	
@@ -3063,11 +3063,11 @@ gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR0100
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000120.1	3405	3530	+	PIM96374.1			50S ribosomal protein L36	rpmJ		magtcs_274	126	41	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000120.1	7869	8570	+					tsf		magtcs_275	702		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000120.1	7869	8570	+	PIM96375.1			elongation factor EF-Ts	tsf		magtcs_275	702	233	
-gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000122.1	41	1057	+							magtcs_276	1017		
+gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000122.1	41	1057	+					xxxA		magtcs_276	1017		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000122.1	41	1057	+	PIM96369.1			hypothetical protein			magtcs_276	1017	338	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000122.1	2355	3056	+					tsf		magtcs_277	702		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000122.1	2355	3056	+	PIM96370.1			elongation factor EF-Ts	tsf		magtcs_277	702	233	
-gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000130.1	188	997	-							magtcs_292	810		
+gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000130.1	188	997	-					xxxK		magtcs_292	810		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000130.1	188	997	-	PIM96347.1			hypothetical protein			magtcs_292	810	269	
 gene	protein_coding	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000130.1	1123	2640	-					mnmG		magtcs_293	1518		
 CDS	with_protein	GCA_002762285.1	Primary Assembly	unplaced scaffold		NXGR01000130.1	1123	2640	-	PIM96348.1			tRNA uridine 5-carboxymethylaminomethyl modification enzyme MnmG	mnmG		magtcs_293	1518	505	
@@ -3126,7 +3126,7 @@ gene	rRNA	GCA_002774925.1	Primary Assembly	chromosome	variant1	CM008769.1	3517	5
 rRNA		GCA_002774925.1	Primary Assembly	chromosome	variant1	CM008769.1	3517	5066	+				16S ribosomal RNA			magtdc_1	1550		
 gene	rRNA	GCA_002774925.1	Primary Assembly	chromosome	variant1	CM008769.1	5524	8234	+							magtdc_2	2711		
 rRNA		GCA_002774925.1	Primary Assembly	chromosome	variant1	CM008769.1	5524	8234	+				23S ribosomal RNA			magtdc_2	2711		
-gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant1	CM008769.1	18294	18512	-							magtdc_4	219		
+gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant1	CM008769.1	18294	18512	-					xxxF		magtdc_4	219		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant1	CM008769.1	18294	18512	-	PIM96065.1			hypothetical protein			magtdc_4	219	72	
 gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant1	CM008769.1	23568	24788	+					rpoD		magtdc_5	1221		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant1	CM008769.1	23568	24788	+	PIM96066.1			RNA polymerase sigma factor rpoD	rpoD		magtdc_5	1221	406	
@@ -3354,7 +3354,7 @@ gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant14	CM0087
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant14	CM008774.1	11803	12759	-	PIM95946.1			cobalamin biosynthesis protein	cobD		magtdc_116	957	318	
 gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant15	CM008775.1	1803	2351	-					tsf		magtdc_117	549		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant15	CM008775.1	1803	2351	-	PIM95941.1			elongation factor EF-Ts	tsf		magtdc_117	549	182	
-gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant15	CM008775.1	4759	5775	-							magtdc_118	1017		
+gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant15	CM008775.1	4759	5775	-					xxxA		magtdc_118	1017		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant15	CM008775.1	4759	5775	-	PIM95942.1			hypothetical protein			magtdc_118	1017	338	
 gene	rRNA	GCA_002774925.1	Primary Assembly	chromosome	variant15	CM008775.1	6193	8905	-							magtdc_120	2713		
 rRNA		GCA_002774925.1	Primary Assembly	chromosome	variant15	CM008775.1	6193	8905	-				23S ribosomal RNA			magtdc_120	2713		
@@ -3384,7 +3384,7 @@ gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant21	CM0087
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant21	CM008782.1	27210	28169	+	PIM95919.1			cobalamin biosynthesis protein	cobD		magtdc_132	960	319	
 gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant21	CM008782.1	45569	46273	-					cobA		magtdc_133	705		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant21	CM008782.1	45569	46273	-	PIM95920.1			putative uroporphyrin-III c-methyltransferase	cobA		magtdc_133	705	234	
-gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant21	CM008782.1	47094	47606	-							magtdc_134	513		
+gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant21	CM008782.1	47094	47606	-					xxxC		magtdc_134	513		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant21	CM008782.1	47094	47606	-	PIM95921.1			hypothetical protein			magtdc_134	513	170	
 gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant21	CM008782.1	53517	53873	-					infC		magtdc_135	357		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant21	CM008782.1	53517	53873	-	PIM95922.1			Translation initiation factor IF-3	infC		magtdc_135	357	118	
@@ -3418,11 +3418,11 @@ gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM0087
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	16354	17133	-	PIM95893.1			cytochrome c oxidase subunit 2	ctaC		magtdc_149	780	259	
 gene	tRNA	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	18180	18251	-					tRNA-His		magtdc_150	72		
 tRNA		GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	18180	18251	-				tRNA-His	tRNA-His		magtdc_150	72		
-gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	18269	18892	-							magtdc_151	624		
+gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	18269	18892	-					xxxM		magtdc_151	624		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	18269	18892	-	PIM95894.1			hypothetical protein			magtdc_151	624	207	
 gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	22924	25482	+					ileS		magtdc_152	2559		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	22924	25482	+	PIM95895.1			Isoleucine--tRNA ligase	ileS		magtdc_152	2559	852	
-gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	25472	26533	-							magtdc_153	1062		
+gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	25472	26533	-					xxxB		magtdc_153	1062		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	25472	26533	-	PIM95896.1			hypothetical protein			magtdc_153	1062	353	
 gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	29691	30038	+					rplU		magtdc_154	348		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	29691	30038	+	PIM95897.1			50S ribosomal protein L21	rplU		magtdc_154	348	115	
@@ -3430,7 +3430,7 @@ gene	rRNA	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	30489
 rRNA		GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	30489	33197	-				23S ribosomal RNA			magtdc_156	2709		
 gene	rRNA	GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	33534	35092	-							magtdc_155	1559		
 rRNA		GCA_002774925.1	Primary Assembly	chromosome	variant22	CM008783.1	33534	35092	-				16S ribosomal RNA			magtdc_155	1559		
-gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant23	CM008784.1	769	1485	+							magtdc_157	717		
+gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant23	CM008784.1	769	1485	+					xxxD		magtdc_157	717		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant23	CM008784.1	769	1485	+	PIM95882.1			hypothetical protein			magtdc_157	717	238	
 gene	protein_coding	GCA_002774925.1	Primary Assembly	chromosome	variant23	CM008784.1	6288	7532	+					sufB		magtdc_158	1245		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	chromosome	variant23	CM008784.1	6288	7532	+	PIM95883.1			FeS cluster assembly protein sufB	sufB		magtdc_158	1245	414	
@@ -3676,7 +3676,7 @@ gene	protein_coding	GCA_002774925.1	Primary Assembly	unplaced scaffold		NXGO0100
 CDS	with_protein	GCA_002774925.1	Primary Assembly	unplaced scaffold		NXGO01000084.1	1327	2109	-	PIM95584.1			cytochrome c oxidase subunit 2	ctaC		magtdc_261	783	260	
 gene	tRNA	GCA_002774925.1	Primary Assembly	unplaced scaffold		NXGO01000084.1	3187	3259	-					tRNA-His		magtdc_262	73		
 tRNA		GCA_002774925.1	Primary Assembly	unplaced scaffold		NXGO01000084.1	3187	3259	-				tRNA-His	tRNA-His		magtdc_262	73		
-gene	protein_coding	GCA_002774925.1	Primary Assembly	unplaced scaffold		NXGO01000084.1	3279	3938	-							magtdc_263	660		
+gene	protein_coding	GCA_002774925.1	Primary Assembly	unplaced scaffold		NXGO01000084.1	3279	3938	-					xxxM		magtdc_263	660		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	unplaced scaffold		NXGO01000084.1	3279	3938	-	PIM95585.1			hypothetical protein			magtdc_263	660	219	
 gene	protein_coding	GCA_002774925.1	Primary Assembly	unplaced scaffold		NXGO01000101.1	2618	2926	+					rplU		magtdc_283	309		
 CDS	with_protein	GCA_002774925.1	Primary Assembly	unplaced scaffold		NXGO01000101.1	2618	2926	+	PIM95491.1			50S ribosomal protein L21	rplU		magtdc_283	309	102	
@@ -3763,7 +3763,7 @@ gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant1	CM00864
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant1	CM008647.1	45249	46175	-	PIM96908.1			Tryptophan--tRNA ligase	trpS		magtre_5	927	308	
 gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant1	CM008647.1	48084	48830	+					glyQ		magtre_6	747		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant1	CM008647.1	48084	48830	+	PIM96909.1			Glycine--tRNA ligase alpha subunit	glyQ		magtre_6	747	248	
-gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant1	CM008647.1	56511	56729	+							magtre_7	219		
+gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant1	CM008647.1	56511	56729	+					xxxF		magtre_7	219		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant1	CM008647.1	56511	56729	+	PIM96910.1			hypothetical protein			magtre_7	219	72	
 gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant2	CM008658.1	3992	7237	+					metH		magtre_8	3246		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant2	CM008658.1	3992	7237	+	PIM96890.1			B12-dependent methionine synthase	metH		magtre_8	3246	1081	
@@ -3773,7 +3773,7 @@ gene	tRNA	GCA_002774995.1	Primary Assembly	chromosome	variant2	CM008658.1	21430	
 tRNA		GCA_002774995.1	Primary Assembly	chromosome	variant2	CM008658.1	21430	21502	+				tRNA-Gly	tRNA-Gly		magtre_10	73		
 gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant2	CM008658.1	29653	30030	+					infC		magtre_11	378		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant2	CM008658.1	29653	30030	+	PIM96892.1			Translation initiation factor IF-3	infC		magtre_11	378	125	
-gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant2	CM008658.1	35958	36470	+							magtre_12	513		
+gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant2	CM008658.1	35958	36470	+					xxxC		magtre_12	513		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant2	CM008658.1	35958	36470	+	PIM96893.1			hypothetical protein			magtre_12	513	170	
 gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant2	CM008658.1	41799	42368	+					dnaQ		magtre_13	570		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant2	CM008658.1	41799	42368	+	PIM96894.1			DNA polymerase III subunit epsilon	dnaQ		magtre_13	570	189	
@@ -3891,7 +3891,7 @@ gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant6	CM00868
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant6	CM008685.1	2564	3643	-	PIM96789.1			Electron transfer flavoprotein large subunit	etfA		magtre_70	1080	359	
 gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant6	CM008685.1	4033	4773	-					etfB		magtre_71	741		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant6	CM008685.1	4033	4773	-	PIM96790.1			Electron transfer flavoprotein small subunit	etfB		magtre_71	741	246	
-gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant6	CM008685.1	10903	11526	+							magtre_72	624		
+gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant6	CM008685.1	10903	11526	+					xxxM		magtre_72	624		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant6	CM008685.1	10903	11526	+	PIM96791.1			hypothetical protein			magtre_72	624	207	
 gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant6	CM008685.1	12685	13467	+					ctaC		magtre_73	783		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant6	CM008685.1	12685	13467	+	PIM96792.1			cytochrome c oxidase subunit 2	ctaC		magtre_73	783	260	
@@ -4005,7 +4005,7 @@ gene	tRNA	GCA_002774995.1	Primary Assembly	chromosome	variant15	CM008653.1	5158	
 tRNA		GCA_002774995.1	Primary Assembly	chromosome	variant15	CM008653.1	5158	5228	-				tRNA-Cys	tRNA-Cys		magtre_128	71		
 gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant15	CM008653.1	5575	6855	-					sufB		magtre_129	1281		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant15	CM008653.1	5575	6855	-	PIM96733.1			FeS cluster assembly protein sufB	sufB		magtre_129	1281	426	
-gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant15	CM008653.1	11519	12157	-							magtre_130	639		
+gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant15	CM008653.1	11519	12157	-					xxxD		magtre_130	639		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant15	CM008653.1	11519	12157	-	PIM96734.1			hypothetical protein			magtre_130	639	212	
 gene	protein_coding	GCA_002774995.1	Primary Assembly	chromosome	variant15	CM008653.1	14157	17351	-					metH		magtre_131	3195		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	chromosome	variant15	CM008653.1	14157	17351	-	PIM96735.1			B12-dependent methionine synthase	metH		magtre_131	3195	1064	
@@ -4221,7 +4221,7 @@ gene	protein_coding	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT0100
 CDS	with_protein	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000061.1	1556	2809	+	PIM96506.1			RNA polymerase sigma factor rpoD	rpoD		magtre_238	1254	417	
 gene	protein_coding	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000061.1	8454	9086	-					tilS		magtre_239	633		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000061.1	8454	9086	-	PIM96507.1			tRNA(Ile)-lysidine synthetase	tilS		magtre_239	633	210	
-gene	protein_coding	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000061.1	9554	10480	-							magtre_240	927		
+gene	protein_coding	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000061.1	9554	10480	-					xxxK		magtre_240	927		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000061.1	9554	10480	-	PIM96508.1			hypothetical protein			magtre_240	927	308	
 gene	protein_coding	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000061.1	10490	12010	-					mnmG		magtre_241	1521		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000061.1	10490	12010	-	PIM96509.1			tRNA uridine 5-carboxymethylaminomethyl modification enzyme MnmG	mnmG		magtre_241	1521	506	
@@ -4317,7 +4317,7 @@ gene	protein_coding	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT0100
 CDS	with_protein	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000085.1	16817	17557	+	PIM96436.1			Electron transfer flavoprotein small subunit	etfB		magtre_288	741	246	
 gene	protein_coding	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000085.1	17947	19026	+					etfA		magtre_289	1080		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000085.1	17947	19026	+	PIM96437.1			Electron transfer flavoprotein large subunit	etfA		magtre_289	1080	359	
-gene	protein_coding	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000086.1	264	887	+							magtre_290	624		
+gene	protein_coding	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000086.1	264	887	+					xxxM		magtre_290	624		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000086.1	264	887	+	PIM96431.1			hypothetical protein			magtre_290	624	207	
 gene	protein_coding	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000087.1	2398	3900	+					cysI		magtre_291	1503		
 CDS	with_protein	GCA_002774995.1	Primary Assembly	unplaced scaffold		NXGT01000087.1	2398	3900	+	PIM96427.1			Sulfite reductase [NADPH] hemoprotein beta-component	cysI		magtre_291	1503	500	

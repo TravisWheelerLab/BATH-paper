@@ -45,4 +45,5 @@ $1/bathsearch --nofs --ct 4 -o results_files/magi-bath-nofs.out --tblout results
 # Run tblastn
 $2/tblastn -db_gencode 4 -outfmt 7 -out results_files/magi-tblastn.tbl -db target_files/MAGI_seqs -query query_files/query_seqs.fa
 
-
+# Run tblastn again to get alignments
+$2/tblastn -db_gencode 4  -out results_files/magi-tblastn.out -db target_files/MAGI_seqs -query query_files/query_seqs.fa

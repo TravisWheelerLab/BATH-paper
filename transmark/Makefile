@@ -11,8 +11,8 @@ IMPLDIR  = impl_sse
 
 SRCDIR   = ../src
 
-ESLDIR   = /your/path/hmmer/easel
-HMMERDIR = /your/path/hmmer
+ESLDIR   = /home/u3/gkrause/git/hmmer/easel
+HMMERDIR = /home/u3/gkrause/git/hmmer
 
 ESLINC   = -I${ESLDIR}
 SRCINC   = -I${SRCDIR}
