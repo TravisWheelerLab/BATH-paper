@@ -60,7 +60,7 @@ bash prepare_queries_and_targets.sh  tanskmark00 ~/BATH-paper/transmark/ ~/ncbi-
 ```
 The /<cpus available/> is what it sounds like - the number of CPUs available for paralyzing on your system. 
 
-4. You should now have all the files you need to run the tools on your benchmark. To do this you will run each of the files starting with "x-" followed by the toolname. Each of these files takes the same set of command line argumants (with the exception of x-last):
+4. You should now have all the files you need to run the tools on your benchmark. To do this you will run each of the files starting with "x-" followed by the toolname. Each of these files takes the same set of command line arguments (with the exception of x-last):
 ```
 x-toolname <tool directory> <benchmark directory> <results directory> <results filename>  <queryfile> <posfile> <targetfile> <cpus> <e-max>
 ```
@@ -69,9 +69,9 @@ For example:
 x-bathsearch ~/BATH/src ~/BATH-paper/transmark/ ~/transmark00-results/BATH/ bath-results  transmark00-AA.bhmm transamark00.pos transmark00.fa 16 100
 ```
 
-To run x-last you need one additional argument at the end of the command giving the average length of your target squences. This can be determined by running esl-seqstat on the target file.
+To run x-last you need one additional argument at the end of the command giving the average length of your target sequences. This can be determined by running esl-seqstat on the target file.
 
-5. Once you have run a tool on a transmark benchmark you can analysis the results by running transmark-pp.sh with the following command line agrumants.
+5. Once you have run a tool on a transmark benchmark you can analyze the results by running transmark-pp.sh with the following command line arguments.
 ```
 bash transmark-pp.sh <benchmark directory> <results filename> <results directory> <analysis filename> <toolname> 
 ```
@@ -80,9 +80,9 @@ For example:
 bash transmark-pp.sh ~/BATH-paper/transmark bath-results ~/transmark00-results/BATH/ bath-analysis bathsearch
 ``` 
 This will produce the following files:
-	1. bath-analysis.xy  - contains the x and y coodinates for creating ROC plots
+	1. bath-analysis.xy  - contains the x and y coordinates for creating ROC plots
 	2. bath-analysis.mer - contains important per hit and per family information
-        3. bath-analysis.tpr - contains the per family data needed to make RBFP ridgeline plots
-	4. bath-analysis.cover - contains coverage and overextention data for all true positives
+        3. bath-analysis.tpr - contains the per-family data needed to make RBFP ridgeline plots
+	4. bath-analysis.cover - contains coverage and overextension data for all true positives
         5. bath-analysis.time - contains run time information
  
