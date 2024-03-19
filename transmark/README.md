@@ -26,7 +26,7 @@ This directory DOES NOT include the following:
 
 Steps to create a transmark benchmark
 1. Clone the BATH-paper repository
-2. Ensure you have a local copy of the HMMER3 repository - including EASLE - as well as the BLAST software (see above)
+2. Ensure you have a local copy of the HMMER3 repository - including EASEL - as well as the BLAST software (see above)
 3. Ensure you have a dataset of protein sequences to use in the construction of decoys (see above)
 4. cd into the transmark directory
 5. Open the MAKEFILE and edit the ESLDIR and HMMERDIR variable to include the path to your local copies
