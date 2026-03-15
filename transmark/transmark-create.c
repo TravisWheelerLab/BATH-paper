@@ -2,9 +2,9 @@
  * Modified from HMMER's create-profmark.c. 
  * 
  * Usage:
- *   ./transmark-create <basename> <DNA msa file> <AA msa file> <blast path> <easle path> <background hmm file> <frameshift rate>
+ *   ./transmark-create <basename> <DNA msa file> <AA msa file> <blast path> <easle miniapps path> <background hmm file> <frameshift rate>
  * For example:
- *   ./transmark-create transmark01 /misc/data0/databases/DNA.msa /misc/data0/databases/AA.msa /misc/data0/databases/protein.msa /ncbi-blast-2.13.0+/bin/ /hmmer/easel/miniapps/ 0.01
+ *   ./transmark-create transmark01 /misc/data0/databases/DNA.msa /misc/data0/databases/AA.msa /misc/data0/databases/protein.msa /ncbi-blast-2.13.0+/bin/ /hmmer/easel/miniapps/ transmark3-bg.hmm 0.01
  *
  * There are three types of sequences:
  * 1. positives:
